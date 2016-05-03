@@ -1,0 +1,45 @@
+easy_admin:
+    formats:
+        datetime: 'Y/m/d h:i A e'
+    design:
+        menu:
+#            - { label: 'Maileguak', route: '#',default: true }
+#            - label: 'Bezero - Zigorrak'
+#              route: 'kudeatu_bezerozigorra_index'
+#              children:
+#                  - { route: 'kudeatu_bezerozigorra_index', icon: 'th-list', label: 'Zerrenda'}
+#                  - { route: 'kudeatu_bezerozigorra_new', icon: 'th-list', label: 'Berria'}
+#            - { label: '', url: '#', icon: '' }
+#            - { label: '', url: '#', icon: '' }
+#            - label: 'Bizikletak'
+#              icon: 'bicycle'
+#              children:
+#                  - { entity: 'Bizikleta', icon: 'th-list', label: 'Zerrenda', params: { sortField: 'createdAt' }}
+#                  - { entity: 'Bizikleta', icon: 'th-list', label: 'Berria', params: { action: 'new' }}
+#
+#            - label: 'Barrutiak'
+#              icon: 'university'
+#              children:
+#                  - { entity: 'Barrutia', icon: 'th-list', label: 'Zerrenda', params: { sortField: 'createdAt' }}
+#                  - { entity: 'Barrutia', icon: 'th-list', label: 'Berria', params: { action: 'new' }}
+#
+#            - label: 'Guneak'
+#              icon: 'map-marker'
+#              children:
+#                  - { entity: 'Guneak', icon: 'th-list', label: 'Zerrenda', params: { sortField: 'createdAt' }}
+#                  - { entity: 'Guneak', icon: 'th-list', label: 'Berria', params: { action: 'new' }}
+#
+#            - label: 'Bezeroak'
+#              icon: 'user'
+#              children:
+#                  - { entity: 'Bezeroa', icon: 'th-list', label: 'Zerrenda', params: { sortField: 'createdAt' }}
+#                  - { entity: 'Bezeroa', icon: 'th-list', label: 'Berria', params: { action: 'new' }}
+#
+#            - label: 'Zigorrak'
+#              children:
+#                  - { entity: 'Zigorra', icon: 'th-list', label: 'Zerrenda', params: { sortField: 'createdAt' }}
+#                  - { entity: 'Zigorra', icon: 'th-list', label: 'Berria', params: { action: 'new' }}
+#
+#            - { label: '', url: '#', icon: '' }
+#            - { label: '', url: '#', icon: '' }
+#            - { label: 'Informeak', route: 'informe_menua' }

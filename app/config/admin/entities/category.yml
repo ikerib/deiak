@@ -1,0 +1,18 @@
+easy_admin:
+    entities:
+        Category:
+            class: AppBundle\Entity\Category
+            label: 'Kategoria'
+            list:
+                title: '%%entity_label%%k'
+                actions:
+                    - { name: 'show', label: '', icon: 'search' }
+                    - { name: 'edit', label: '', icon: 'edit' }
+                    - { name: 'delete', label: '', icon: 'trash' }
+                fields: ['id','name']
+
+            show:
+                fields: ['name']
+
+            form:
+                fields: ['name']
