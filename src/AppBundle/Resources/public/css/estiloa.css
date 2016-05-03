@@ -5,3 +5,7 @@
     display: block;
     font-size: 14px;
 }
+
+.paginate_button{
+    display: inline !important;
+}

@@ -217,4 +217,28 @@ class Deia
     {
         return $this->inzidentzia;
     }
+
+    /**
+     * Set teknikoa
+     *
+     * @param string $teknikoa
+     *
+     * @return Deia
+     */
+    public function setTeknikoa($teknikoa)
+    {
+        $this->teknikoa = $teknikoa;
+
+        return $this;
+    }
+
+    /**
+     * Get teknikoa
+     *
+     * @return string
+     */
+    public function getTeknikoa()
+    {
+        return $this->teknikoa;
+    }
 }

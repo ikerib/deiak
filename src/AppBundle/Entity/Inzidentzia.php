@@ -31,6 +31,20 @@ class Inzidentzia
     /**
      * @var string
      *
+     * @ORM\Column(name="izena", type="string", length=255)
+     */
+    private $izena;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="azalpena", type="text", nullable=true)
+     */
+    private $azalpena;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="teknikoa", type="string", length=255)
      */
     private $teknikoa;
@@ -77,7 +91,7 @@ class Inzidentzia
 
     public function __toString()
     {
-        return $this->getUserid();
+        return $this->getIzena();
     }
     
     /**
@@ -250,5 +264,53 @@ class Inzidentzia
     public function getTeknikoa()
     {
         return $this->teknikoa;
+    }
+
+    /**
+     * Set izena
+     *
+     * @param string $izena
+     *
+     * @return Inzidentzia
+     */
+    public function setIzena($izena)
+    {
+        $this->izena = $izena;
+
+        return $this;
+    }
+
+    /**
+     * Get izena
+     *
+     * @return string
+     */
+    public function getIzena()
+    {
+        return $this->izena;
+    }
+
+    /**
+     * Set azalpena
+     *
+     * @param string $azalpena
+     *
+     * @return Inzidentzia
+     */
+    public function setAzalpena($azalpena)
+    {
+        $this->azalpena = $azalpena;
+
+        return $this;
+    }
+
+    /**
+     * Get azalpena
+     *
+     * @return string
+     */
+    public function getAzalpena()
+    {
+        return $this->azalpena;
     }
 }
