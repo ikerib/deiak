@@ -9,10 +9,13 @@ easy_admin:
                     - { name: 'show', label: '', icon: 'search' }
                     - { name: 'edit', label: '', icon: 'edit' }
                     - { name: 'delete', label: '', icon: 'trash' }
-                fields: ['id','name']
+                fields: ['id','name','parent','children']
 
             show:
-                fields: ['name']
+                fields: ['name','parent','children']
 
             form:
-                fields: ['name']
+                fields:
+                    - { property: 'name', label: 'Izena'  }
+                    - { property: 'parent', label: 'Kategoria' , type_options: { placeholder: 'Aukeratu Kategoria nagusia...' } }
+                    - { property: 'children', label: 'Azpi Kategoria' }
