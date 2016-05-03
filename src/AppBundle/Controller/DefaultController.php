@@ -14,19 +14,20 @@ class DefaultController extends Controller
     public function indexAction(Request $request)
     {
 
-
-        $em = $this->getDoctrine()->getManager('ocs');
-
-        $connection = $em->getConnection();
-//        $statement = $connection->prepare("SELECT something FROM somethingelse WHERE id = :id");
+        $emocs = $this->getDoctrine()->getManager('ocs');
+        $connection = $emocs->getConnection();
         $statement = $connection->prepare("SELECT * FROM hardware WHERE USERID = :id");
         $statement->bindValue('id', 'iibarguren');
         $statement->execute();
         $results = $statement->fetchAll();
 
 
-        dump($results);
+        $em = $this->getDoctrine()->getManager();
+        $inzidentziak = $em->getRepository('AppBundle:Inzidentzia')->findAll();
 
-        return $this->render('default/index.html.twig', array('ocs' => $results[0]));
+        return $this->render('default/index.html.twig', array(
+            'ocs'           => $results[0],
+            'inzidentziak'  => $inzidentziak
+        ));
     }
 }

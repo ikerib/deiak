@@ -29,6 +29,13 @@ class Inzidentzia
     private $userid;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="teknikoa", type="string", length=255)
+     */
+    private $teknikoa;
+
+    /**
      * @var bool
      *
      * @ORM\Column(name="konpondua", type="boolean", nullable=true)
@@ -219,5 +226,29 @@ class Inzidentzia
     public function getDeiak()
     {
         return $this->deiak;
+    }
+
+    /**
+     * Set teknikoa
+     *
+     * @param string $teknikoa
+     *
+     * @return Inzidentzia
+     */
+    public function setTeknikoa($teknikoa)
+    {
+        $this->teknikoa = $teknikoa;
+
+        return $this;
+    }
+
+    /**
+     * Get teknikoa
+     *
+     * @return string
+     */
+    public function getTeknikoa()
+    {
+        return $this->teknikoa;
     }
 }

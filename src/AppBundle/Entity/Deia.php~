@@ -31,6 +31,13 @@ class Deia
     /**
      * @var string
      *
+     * @ORM\Column(name="teknikoa", type="string", length=255)
+     */
+    private $teknikoa;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="azalpena", type="text", nullable=true)
      */
     private $azalpena;

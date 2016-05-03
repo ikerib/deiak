@@ -31,6 +31,13 @@ class Deia
     /**
      * @var string
      *
+     * @ORM\Column(name="teknikoa", type="string", length=255)
+     */
+    private $teknikoa;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="azalpena", type="text", nullable=true)
      */
     private $azalpena;
@@ -209,5 +216,29 @@ class Deia
     public function getInzidentzia()
     {
         return $this->inzidentzia;
+    }
+
+    /**
+     * Set teknikoa
+     *
+     * @param string $teknikoa
+     *
+     * @return Deia
+     */
+    public function setTeknikoa($teknikoa)
+    {
+        $this->teknikoa = $teknikoa;
+
+        return $this;
+    }
+
+    /**
+     * Get teknikoa
+     *
+     * @return string
+     */
+    public function getTeknikoa()
+    {
+        return $this->teknikoa;
     }
 }

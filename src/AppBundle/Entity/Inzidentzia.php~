@@ -29,6 +29,13 @@ class Inzidentzia
     private $userid;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="teknikoa", type="string", length=255)
+     */
+    private $teknikoa;
+
+    /**
      * @var bool
      *
      * @ORM\Column(name="konpondua", type="boolean", nullable=true)
