@@ -5,13 +5,9 @@
 {% block head_javascript %}
     {{ parent() }}
 
-
-    <link rel="stylesheet" href="{{ asset('bundles/app/fonts/glyphicons-halflings-regular.svg') }}">
-    <link rel="stylesheet" href="{{ asset('bundles/app/fonts/glyphicons-halflings-regular.ttf') }}">
-    <link rel="stylesheet" href="{{ asset('bundles/app/fonts/glyphicons-halflings-regular.woff2') }}">
     <link rel="stylesheet" href="{{ asset('bundles/easyadmin/stylesheet/easyadmin-all.min.css') }}">
     <link rel="stylesheet" href="{{ asset('bundles/app/css/dataTables.bootstrap.css') }}">
-    <link rel="stylesheet" href="{{ asset('bundles/app/fonts/glyphicons-halflings-regular.eot') }}">
+
 {% endblock %}
 
 {% block sidebar %}
@@ -144,7 +140,7 @@
 {% block body_javascript %}
     {{ parent() }}
 
-    <script src="{{ asset('bundles/app/js/jquery.dataTables.js') }}"></script>
+    <script src="{{ asset('bundles/app/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('bundles/app/js/dataTables.bootstrap.min.js') }}"></script>
 
 
