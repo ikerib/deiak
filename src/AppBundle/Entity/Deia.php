@@ -5,12 +5,12 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Category
+ * Deia
  *
- * @ORM\Table(name="category")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\CategoryRepository")
+ * @ORM\Table(name="deia")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\DeiaRepository")
  */
-class Category
+class Deia
 {
     /**
      * @var int
@@ -24,9 +24,17 @@ class Category
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=255, unique=true)
+     * @ORM\Column(name="userid", type="string", length=255, nullable=true)
      */
-    private $name;
+    private $userid;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="azalpena", type="text", nullable=true)
+     */
+    private $azalpena;
+
 
     /**
      * @var \DateTime
@@ -50,28 +58,20 @@ class Category
      * ************************************************************************************************************************************************************************
      */
 
-    /**
-     * @ORM\OneToMany(targetEntity="Category", mappedBy="parent")
-     */
-    private $children;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="Category", inversedBy="children")
-     * @ORM\JoinColumn(name="parent_id", referencedColumnName="id")
-     */
-    private $parent;
-
-
     public function __construct() {
-        $this->children = new \Doctrine\Common\Collections\ArrayCollection();
         $this->createdAt = new \DateTime();
         $this->updatedAt = new \DateTime();
     }
 
     public function __toString()
     {
-        return $this->getName();
+        return $this->getUserid();
     }
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Inzidentzia", inversedBy="deiak")
+     */
+    private $inzidentzia;
 
     /**
      * ************************************************************************************************************************************************************************
@@ -80,7 +80,6 @@ class Category
      * ************************************************************************************************************************************************************************
      * ************************************************************************************************************************************************************************
      */
-
 
     /**
      * Get id
@@ -93,27 +92,51 @@ class Category
     }
 
     /**
-     * Set name
+     * Set userid
      *
-     * @param string $name
+     * @param string $userid
      *
-     * @return Category
+     * @return Deia
      */
-    public function setName($name)
+    public function setUserid($userid)
     {
-        $this->name = $name;
+        $this->userid = $userid;
 
         return $this;
     }
 
     /**
-     * Get name
+     * Get userid
      *
      * @return string
      */
-    public function getName()
+    public function getUserid()
     {
-        return $this->name;
+        return $this->userid;
+    }
+
+    /**
+     * Set azalpena
+     *
+     * @param string $azalpena
+     *
+     * @return Deia
+     */
+    public function setAzalpena($azalpena)
+    {
+        $this->azalpena = $azalpena;
+
+        return $this;
+    }
+
+    /**
+     * Get azalpena
+     *
+     * @return string
+     */
+    public function getAzalpena()
+    {
+        return $this->azalpena;
     }
 
     /**
@@ -121,7 +144,7 @@ class Category
      *
      * @param \DateTime $createdAt
      *
-     * @return Category
+     * @return Deia
      */
     public function setCreatedAt($createdAt)
     {
@@ -145,7 +168,7 @@ class Category
      *
      * @param \DateTime $updatedAt
      *
-     * @return Category
+     * @return Deia
      */
     public function setUpdatedAt($updatedAt)
     {
@@ -165,60 +188,26 @@ class Category
     }
 
     /**
-     * Add child
+     * Set inzidentzia
      *
-     * @param \AppBundle\Entity\Category $child
+     * @param \AppBundle\Entity\Inzidentzia $inzidentzia
      *
-     * @return Category
+     * @return Deia
      */
-    public function addChild(\AppBundle\Entity\Category $child)
+    public function setInzidentzia(\AppBundle\Entity\Inzidentzia $inzidentzia = null)
     {
-        $this->children[] = $child;
+        $this->inzidentzia = $inzidentzia;
 
         return $this;
     }
 
     /**
-     * Remove child
+     * Get inzidentzia
      *
-     * @param \AppBundle\Entity\Category $child
+     * @return \AppBundle\Entity\Inzidentzia
      */
-    public function removeChild(\AppBundle\Entity\Category $child)
+    public function getInzidentzia()
     {
-        $this->children->removeElement($child);
-    }
-
-    /**
-     * Get children
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getChildren()
-    {
-        return $this->children;
-    }
-
-    /**
-     * Set parent
-     *
-     * @param \AppBundle\Entity\Category $parent
-     *
-     * @return Category
-     */
-    public function setParent(\AppBundle\Entity\Category $parent = null)
-    {
-        $this->parent = $parent;
-
-        return $this;
-    }
-
-    /**
-     * Get parent
-     *
-     * @return \AppBundle\Entity\Category
-     */
-    public function getParent()
-    {
-        return $this->parent;
+        return $this->inzidentzia;
     }
 }

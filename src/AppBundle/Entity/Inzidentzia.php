@@ -5,12 +5,12 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Category
+ * Inzidentzia
  *
- * @ORM\Table(name="category")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\CategoryRepository")
+ * @ORM\Table(name="inzidentzia")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\InzidentziaRepository")
  */
-class Category
+class Inzidentzia
 {
     /**
      * @var int
@@ -24,9 +24,16 @@ class Category
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=255, unique=true)
+     * @ORM\Column(name="userid", type="string", length=255)
      */
-    private $name;
+    private $userid;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="konpondua", type="boolean", nullable=true)
+     */
+    private $konpondua;
 
     /**
      * @var \DateTime
@@ -51,16 +58,9 @@ class Category
      */
 
     /**
-     * @ORM\OneToMany(targetEntity="Category", mappedBy="parent")
+     * @ORM\OneToMany(targetEntity="Deia", mappedBy="inzidentzia")
      */
-    private $children;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="Category", inversedBy="children")
-     * @ORM\JoinColumn(name="parent_id", referencedColumnName="id")
-     */
-    private $parent;
-
+    private $deiak;
 
     public function __construct() {
         $this->children = new \Doctrine\Common\Collections\ArrayCollection();
@@ -70,9 +70,9 @@ class Category
 
     public function __toString()
     {
-        return $this->getName();
+        return $this->getUserid();
     }
-
+    
     /**
      * ************************************************************************************************************************************************************************
      * ************************************************************************************************************************************************************************
@@ -80,7 +80,6 @@ class Category
      * ************************************************************************************************************************************************************************
      * ************************************************************************************************************************************************************************
      */
-
 
     /**
      * Get id
@@ -93,27 +92,51 @@ class Category
     }
 
     /**
-     * Set name
+     * Set userid
      *
-     * @param string $name
+     * @param string $userid
      *
-     * @return Category
+     * @return Inzidentzia
      */
-    public function setName($name)
+    public function setUserid($userid)
     {
-        $this->name = $name;
+        $this->userid = $userid;
 
         return $this;
     }
 
     /**
-     * Get name
+     * Get userid
      *
      * @return string
      */
-    public function getName()
+    public function getUserid()
     {
-        return $this->name;
+        return $this->userid;
+    }
+
+    /**
+     * Set konpondua
+     *
+     * @param boolean $konpondua
+     *
+     * @return Inzidentzia
+     */
+    public function setKonpondua($konpondua)
+    {
+        $this->konpondua = $konpondua;
+
+        return $this;
+    }
+
+    /**
+     * Get konpondua
+     *
+     * @return boolean
+     */
+    public function getKonpondua()
+    {
+        return $this->konpondua;
     }
 
     /**
@@ -121,7 +144,7 @@ class Category
      *
      * @param \DateTime $createdAt
      *
-     * @return Category
+     * @return Inzidentzia
      */
     public function setCreatedAt($createdAt)
     {
@@ -145,7 +168,7 @@ class Category
      *
      * @param \DateTime $updatedAt
      *
-     * @return Category
+     * @return Inzidentzia
      */
     public function setUpdatedAt($updatedAt)
     {
@@ -165,60 +188,36 @@ class Category
     }
 
     /**
-     * Add child
+     * Add deiak
      *
-     * @param \AppBundle\Entity\Category $child
+     * @param \AppBundle\Entity\Deia $deiak
      *
-     * @return Category
+     * @return Inzidentzia
      */
-    public function addChild(\AppBundle\Entity\Category $child)
+    public function addDeiak(\AppBundle\Entity\Deia $deiak)
     {
-        $this->children[] = $child;
+        $this->deiak[] = $deiak;
 
         return $this;
     }
 
     /**
-     * Remove child
+     * Remove deiak
      *
-     * @param \AppBundle\Entity\Category $child
+     * @param \AppBundle\Entity\Deia $deiak
      */
-    public function removeChild(\AppBundle\Entity\Category $child)
+    public function removeDeiak(\AppBundle\Entity\Deia $deiak)
     {
-        $this->children->removeElement($child);
+        $this->deiak->removeElement($deiak);
     }
 
     /**
-     * Get children
+     * Get deiak
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getChildren()
+    public function getDeiak()
     {
-        return $this->children;
-    }
-
-    /**
-     * Set parent
-     *
-     * @param \AppBundle\Entity\Category $parent
-     *
-     * @return Category
-     */
-    public function setParent(\AppBundle\Entity\Category $parent = null)
-    {
-        $this->parent = $parent;
-
-        return $this;
-    }
-
-    /**
-     * Get parent
-     *
-     * @return \AppBundle\Entity\Category
-     */
-    public function getParent()
-    {
-        return $this->parent;
+        return $this->deiak;
     }
 }
