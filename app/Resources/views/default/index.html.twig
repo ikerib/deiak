@@ -6,7 +6,7 @@
     {{ parent() }}
 
     <link rel="stylesheet" href="{{ asset('bundles/easyadmin/stylesheet/easyadmin-all.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('bundles/app/css/dataTables.bootstrap.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/app/css/datatables/dataTables.bootstrap.css') }}">
 
 {% endblock %}
 
@@ -59,7 +59,7 @@
                     <div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
                         <div class="row">
                             <div class="col-sm-12">
-                                <table id="example1" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
+                                <table id="tinzidentziak" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
                                     <thead>
                                         <tr>
                                             <th>Id</th>
@@ -128,46 +128,12 @@
 {% block body_javascript %}
     {{ parent() }}
 
-    <script src="{{ asset('bundles/app/js/jquery.dataTables.min.js') }}"></script>
-    <script src="{{ asset('bundles/app/js/dataTables.bootstrap.min.js') }}"></script>
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
 
 
-    <script>
-        $(function () {
-//            $("#example1").DataTable();
-            $('#example1').DataTable({
-                "paging": true,
-                "lengthChange": false,
-                "searching": true,
-                "ordering": true,
-                "info": true,
-                "autoWidth": true,
-                "language" : {
-                    "sProcessing":     "Prozesatzen...",
-                    "sLengthMenu":     "Erakutsi _MENU_ erregistro",
-                    "sZeroRecords":    "Ez da emaitzarik aurkitu",
-                    "sEmptyTable":     "Taula hontan ez dago inongo datu erabilgarririk",
-                    "sInfo":           "_START_ -etik _END_ -erako erregistroak erakusten, guztira _TOTAL_ erregistro",
-                    "sInfoEmpty":      "0tik 0rako erregistroak erakusten, guztira 0 erregistro",
-                    "sInfoFiltered":   "(guztira _MAX_ erregistro iragazten)",
-                    "sInfoPostFix":    "",
-                    "sSearch":         "Aurkitu:",
-                    "sUrl":            "",
-                    "sInfoThousands":  ",",
-                    "sLoadingRecords": "Abiarazten...",
-                    "oPaginate": {
-                        "sFirst":    "Lehena",
-                        "sLast":     "Azkena",
-                        "sNext":     "Hurrengoa",
-                        "sPrevious": "Aurrekoa"
-                    },
-                    "oAria": {
-                        "sSortAscending":  ": Zutabea goranzko eran ordenatzeko aktibatu ",
-                        "sSortDescending": ": Zutabea beheranzko eran ordenatzeko aktibatu"
-                    }
-                }
-            });
-        });
-    </script>
+    <script src="{{ asset('bundles/app/js/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('bundles/app/js/datatables/dataTables.bootstrap.min.js') }}"></script>
+    <script src="{{ asset('bundles/app/js/datatables/dt.js') }}"></script>
 
 {% endblock %}

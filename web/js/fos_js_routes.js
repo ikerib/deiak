@@ -1,0 +1,1 @@
+fos.Router.setData({"base_url":"","routes":{"deiak":{"tokens":[["text","\/api\/deiak"]],"defaults":[],"requirements":[],"hosttokens":[]}},"prefix":"","host":"localhost","scheme":"http"});

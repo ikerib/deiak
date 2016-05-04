@@ -19,7 +19,10 @@ class AppKernel extends Kernel
             new JavierEguiluz\Bundle\EasyAdminBundle\EasyAdminBundle(),
             new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
             new Bmatzner\JQueryUIBundle\BmatznerJQueryUIBundle(),
-            new Sunra\AngularBundle\SunraAngularBundle()
+            new Sunra\AngularBundle\SunraAngularBundle(),
+            new FOS\RestBundle\FOSRestBundle(),
+            new JMS\SerializerBundle\JMSSerializerBundle(),
+            new Bazinga\Bundle\HateoasBundle\BazingaHateoasBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

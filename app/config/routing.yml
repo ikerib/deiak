@@ -9,3 +9,11 @@ easy_admin_bundle:
 
 fos_js_routing:
     resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
+
+acme_api_demos:
+  type: rest
+  resource: AppBundle\Controller\ApiController
+  prefix: /api
+  options:
+          expose: true
+
