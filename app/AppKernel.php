@@ -22,8 +22,8 @@ class AppKernel extends Kernel
             new Sunra\AngularBundle\SunraAngularBundle(),
             new FOS\RestBundle\FOSRestBundle(),
             new JMS\SerializerBundle\JMSSerializerBundle(),
-            new Bazinga\Bundle\HateoasBundle\BazingaHateoasBundle(),
-            new Ivory\CKEditorBundle\IvoryCKEditorBundle(),
+//            new Bazinga\Bundle\HateoasBundle\BazingaHateoasBundle(),
+//            new Ivory\CKEditorBundle\IvoryCKEditorBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {
