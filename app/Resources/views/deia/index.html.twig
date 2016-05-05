@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Deia list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Userid</th>
+                <th>Teknikoa</th>
+                <th>Azalpena</th>
+                <th>Createdat</th>
+                <th>Updatedat</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for deium in deias %}
+            <tr>
+                <td><a href="{{ path('deia_show', { 'id': deium.id }) }}">{{ deium.id }}</a></td>
+                <td>{{ deium.userid }}</td>
+                <td>{{ deium.teknikoa }}</td>
+                <td>{{ deium.azalpena }}</td>
+                <td>{% if deium.createdAt %}{{ deium.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if deium.updatedAt %}{{ deium.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('deia_show', { 'id': deium.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('deia_edit', { 'id': deium.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('deia_new') }}">Create a new entry</a>
+        </li>
+    </ul>
+{% endblock %}

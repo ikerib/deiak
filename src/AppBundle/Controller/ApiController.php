@@ -20,7 +20,7 @@ class ApiController extends FOSRestController
 
         $deiak = $repository->findAll();
 
-$erantzuna = array('data'=>$deiak);
+        $erantzuna = array('data'=>$deiak);
 
         $view = $this->view($erantzuna);
         return $this->handleView($view);

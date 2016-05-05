@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Inzidentzia list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Userid</th>
+                <th>Izena</th>
+                <th>Azalpena</th>
+                <th>Teknikoa</th>
+                <th>Konpondua</th>
+                <th>Createdat</th>
+                <th>Updatedat</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for inzidentzium in inzidentzias %}
+            <tr>
+                <td><a href="{{ path('inzidentzia_show', { 'id': inzidentzium.id }) }}">{{ inzidentzium.id }}</a></td>
+                <td>{{ inzidentzium.userid }}</td>
+                <td>{{ inzidentzium.izena }}</td>
+                <td>{{ inzidentzium.azalpena }}</td>
+                <td>{{ inzidentzium.teknikoa }}</td>
+                <td>{% if inzidentzium.konpondua %}Yes{% else %}No{% endif %}</td>
+                <td>{% if inzidentzium.createdAt %}{{ inzidentzium.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if inzidentzium.updatedAt %}{{ inzidentzium.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('inzidentzia_show', { 'id': inzidentzium.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('inzidentzia_edit', { 'id': inzidentzium.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('inzidentzia_new') }}">Create a new entry</a>
+        </li>
+    </ul>
+{% endblock %}

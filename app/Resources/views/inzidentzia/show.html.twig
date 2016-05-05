@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Inzidentzia</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ inzidentzium.id }}</td>
+            </tr>
+            <tr>
+                <th>Userid</th>
+                <td>{{ inzidentzium.userid }}</td>
+            </tr>
+            <tr>
+                <th>Izena</th>
+                <td>{{ inzidentzium.izena }}</td>
+            </tr>
+            <tr>
+                <th>Azalpena</th>
+                <td>{{ inzidentzium.azalpena }}</td>
+            </tr>
+            <tr>
+                <th>Teknikoa</th>
+                <td>{{ inzidentzium.teknikoa }}</td>
+            </tr>
+            <tr>
+                <th>Konpondua</th>
+                <td>{% if inzidentzium.konpondua %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Createdat</th>
+                <td>{% if inzidentzium.createdAt %}{{ inzidentzium.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Updatedat</th>
+                <td>{% if inzidentzium.updatedAt %}{{ inzidentzium.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('inzidentzia_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('inzidentzia_edit', { 'id': inzidentzium.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}
