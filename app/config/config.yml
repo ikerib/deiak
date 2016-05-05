@@ -1,5 +1,6 @@
 imports:
     - { resource: parameters.yml }
+    - { resource: parametersocs.yml }
     - { resource: security.yml }
     - { resource: services.yml }
     - { resource: admin/ }
@@ -93,5 +94,5 @@ fos_rest:
         include_format: false                           # We do not include format in request, so that all responses
                                                         # will eventually be JSON formated
 
-fos_js_routing:
-    routes_to_expose: [ deiak  ]
+#fos_js_routing:
+#    routes_to_expose: [ deiak  ]
