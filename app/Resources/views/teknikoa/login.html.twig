@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="{{ app.request.locale|split('_')|first|default('en') }}" {% block ngApp %}{% endblock %}>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <meta name="generator" content="EasyAdmin" />
+
+    <title>{% block page_title %}{{ block('content_title')|striptags|raw }}{% endblock %}</title>
+
+    {% block head_stylesheets %}
+        <link rel="stylesheet" href="{{ asset('bundles/easyadmin/stylesheet/easyadmin-all.min.css') }}">
+        <style>
+            {{ easyadmin_config('_internal.custom_css')|raw }}
+        </style>
+    {% endblock %}
+
+    {% for css_asset in easyadmin_config('design.assets.css') %}
+        <link rel="stylesheet" href="{{ asset(css_asset) }}">
+    {% endfor %}
+
+    {% block head_favicon %}
+        {% set favicon = easyadmin_config('design.assets.favicon') %}
+        <link rel="icon" type="{{ favicon.mime_type }}" href="{{ asset(favicon.path) }}" />
+    {% endblock %}
+
+    {% block head_javascript %}
+        <script src="{{ asset('bundles/easyadmin/javascript/easyadmin-all.min.js') }}"></script>
+
+    {% block adminlte_options %}
+        <script type="text/javascript">
+            var AdminLTEOptions = {
+                animationSpeed: 'fast',
+                sidebarExpandOnHover: true,
+                enableBoxRefresh: false,
+                enableBSToppltip: false,
+                enableFastclick: false,
+                enableControlSidebar: false,
+                enableBoxWidget: false
+            };
+        </script>
+    {% endblock %}
+    {% endblock head_javascript %}
+
+    <!--[if lt IE 9]>
+    <script src="{{ asset('bundles/easyadmin/stylesheet/html5shiv.min.css') }}"></script>
+    <script src="{{ asset('bundles/easyadmin/stylesheet/respond.min.css') }}"></script>
+    <![endif]-->
+    <style>
+        .login-page, .register-page {
+            background: #d2d6de;
+        }
+    </style>
+</head>
+
+{% block body %}
+    <body class="hold-transition login-page">
+
+    <div class="login-box">
+    <div class="login-logo">
+        <a href="{{ path('teknikoa_login') }}"><b>Deiak</b></a>
+    </div>
+    <!-- /.login-logo -->
+    <div class="login-box-body">
+        <p class="login-box-msg">Egin klik zure izenean saioa hasteko</p>
+
+        <form id="frmLogin" action="{{ path('teknikoa_dologin') }}" method="post">
+            <div class="box box-danger">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Teknikariak login</h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body no-padding">
+                    <ul class="users-list clearfix">
+                        {% for teknikoa in teknikoas %}
+                        <li>
+                            <a href="#" class="btnLogin" data-deknikoid="{{ teknikoa.id }}">
+                                <img src="{{ asset('bundles/app/img/' ~ teknikoa.avatar) }}" alt="User Image">
+                                <a class="users-list-name" href="#">{{ teknikoa.username }}</a>
+                            </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    <!-- /.users-list -->
+                </div>
+            </div>
+            <input id="username" type="hidden" name="username" value="">
+        </form>
+
+    </div>
+    <!-- /.login-box-body -->
+</div>
+<!-- /.login-box -->
+
+{% block body_javascript %}{% endblock body_javascript %}
+
+{% for js_asset in easyadmin_config('design.assets.js') %}
+    <script src="{{ asset(js_asset) }}"></script>
+{% endfor %}
+    <script type="text/javascript">
+        $(function() {
+            $('.btnLogin').click(function(){
+                var tekid = $(this).data('deknikoid');
+                $('#username').val(tekid);
+                $('#frmLogin').submit();
+            });
+        });
+    </script>
+</body>
+{% endblock body %}
+</html>

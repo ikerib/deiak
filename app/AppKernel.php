@@ -22,7 +22,6 @@ class AppKernel extends Kernel
             new Sunra\AngularBundle\SunraAngularBundle(),
             new FOS\RestBundle\FOSRestBundle(),
             new JMS\SerializerBundle\JMSSerializerBundle(),
-//            new Bazinga\Bundle\HateoasBundle\BazingaHateoasBundle(),
             new Ivory\CKEditorBundle\IvoryCKEditorBundle(),
         ];
 

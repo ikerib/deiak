@@ -9,12 +9,13 @@ easy_admin:
                     - { name: 'show', label: '', icon: 'search' }
                     - { name: 'edit', label: '', icon: 'edit' }
                     - { name: 'delete', label: '', icon: 'trash' }
-                fields: ['id','izena','emaila']
+                fields: ['id','username','email','avatar']
 
             show:
-                fields: ['name','emaila']
+                fields: ['name','username','emaila','avatar']
 
             form:
                 fields:
-                    - { property: 'izena', label: 'Izena'  }
-                    - { property: 'emaila', label: 'Emaila'  }
+                    - { property: 'username', label: 'username'  }
+                    - { property: 'email', label: 'Emaila'  }
+                    - { property: 'avatar', label: 'Irudia:', css_class: 'col-sm-3', type: 'choice', type_options: { placeholder: 'Aukeratu irudi bat', choices: { 'avatar.png': 'avatar.png', 'avatar2.png': 'avatar2.png', 'avatar3.png': 'avatar3.png', 'avatar04.png': 'avatar04.png', 'avatar5.png': 'avatar5.png'} }}

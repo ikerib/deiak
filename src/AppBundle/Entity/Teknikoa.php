@@ -1,8 +1,14 @@
 <?php
+/**
+ * User: iibarguren
+ * Date: 5/05/16
+ * Time: 8:48
+ */
 
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * Teknikoa
@@ -29,19 +35,26 @@ class Teknikoa
     private $username;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="izena", type="string", length=255)
+     * @ORM\Column(type="string", length=64, nullable=true)
      */
-    private $izena;
+    private $password;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="emaila", type="string", length=255)
+     * @ORM\Column(name="avatar", type="string", length=255, nullable=true)
      */
-    private $emaila;
+    private $avatar;
 
+    /**
+     * @ORM\Column(type="string", length=60, unique=true)
+     */
+    private $email;
+
+    /**
+     * @ORM\Column(name="is_active", type="boolean")
+     */
+    private $isActive;
 
     /**
      * @var \DateTime
@@ -66,13 +79,64 @@ class Teknikoa
      */
 
     public function __construct() {
+        $this->isActive = true;
         $this->createdAt = new \DateTime();
         $this->updatedAt = new \DateTime();
     }
 
     public function __toString()
     {
-        return $this->getIzena();
+        return $this->getUsername();
+    }
+
+    public function getUsername()
+    {
+        return $this->username;
+    }
+
+    public function getSalt()
+    {
+        // you *may* need a real salt depending on your encoder
+        // see section on salt below
+        return null;
+    }
+
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    public function getRoles()
+    {
+        return array('ROLE_ADMIN');
+    }
+
+    public function eraseCredentials()
+    {
+    }
+
+    /** @see \Serializable::serialize() */
+    public function serialize()
+    {
+        return serialize(array(
+            $this->id,
+            $this->username,
+            $this->password,
+            // see section on salt below
+            // $this->salt,
+        ));
+    }
+
+    /** @see \Serializable::unserialize() */
+    public function unserialize($serialized)
+    {
+        list (
+            $this->id,
+            $this->username,
+            $this->password,
+            // see section on salt below
+            // $this->salt
+            ) = unserialize($serialized);
     }
 
     /**
@@ -110,61 +174,89 @@ class Teknikoa
     }
 
     /**
-     * Get username
+     * Set password
      *
-     * @return string
-     */
-    public function getUsername()
-    {
-        return $this->username;
-    }
-
-    /**
-     * Set izena
-     *
-     * @param string $izena
+     * @param string $password
      *
      * @return Teknikoa
      */
-    public function setIzena($izena)
+    public function setPassword($password)
     {
-        $this->izena = $izena;
+        $this->password = $password;
 
         return $this;
     }
 
     /**
-     * Get izena
+     * Set avatar
      *
-     * @return string
-     */
-    public function getIzena()
-    {
-        return $this->izena;
-    }
-
-    /**
-     * Set emaila
-     *
-     * @param string $emaila
+     * @param string $avatar
      *
      * @return Teknikoa
      */
-    public function setEmaila($emaila)
+    public function setAvatar($avatar)
     {
-        $this->emaila = $emaila;
+        $this->avatar = $avatar;
 
         return $this;
     }
 
     /**
-     * Get emaila
+     * Get avatar
      *
      * @return string
      */
-    public function getEmaila()
+    public function getAvatar()
     {
-        return $this->emaila;
+        return $this->avatar;
+    }
+
+    /**
+     * Set email
+     *
+     * @param string $email
+     *
+     * @return Teknikoa
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * Get email
+     *
+     * @return string
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * Set isActive
+     *
+     * @param boolean $isActive
+     *
+     * @return Teknikoa
+     */
+    public function setIsActive($isActive)
+    {
+        $this->isActive = $isActive;
+
+        return $this;
+    }
+
+    /**
+     * Get isActive
+     *
+     * @return boolean
+     */
+    public function getIsActive()
+    {
+        return $this->isActive;
     }
 
     /**
