@@ -30,6 +30,13 @@ class Teknikoa
     /**
      * @var string
      *
+     * @ORM\Column(name="izena", type="string", length=255)
+     */
+    private $izena;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="username", type="string", length=255)
      */
     private $username;
@@ -305,5 +312,29 @@ class Teknikoa
     public function getUpdatedAt()
     {
         return $this->updatedAt;
+    }
+
+    /**
+     * Set izena
+     *
+     * @param string $izena
+     *
+     * @return Teknikoa
+     */
+    public function setIzena($izena)
+    {
+        $this->izena = $izena;
+
+        return $this;
+    }
+
+    /**
+     * Get izena
+     *
+     * @return string
+     */
+    public function getIzena()
+    {
+        return $this->izena;
     }
 }

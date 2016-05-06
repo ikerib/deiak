@@ -55,12 +55,12 @@
 
 {% block body %}
     <body class="hold-transition login-page">
-
+    {% if error %}<div>{{ dump(error) }}</div>{% endif %}
     <div class="login-box">
     <div class="login-logo">
         <a href="{{ path('teknikoa_login') }}"><b>Deiak</b></a>
     </div>
-    <!-- /.login-logo -->
+
     <div class="login-box-body">
         <p class="login-box-msg">Egin klik zure izenean saioa hasteko</p>
 
@@ -74,9 +74,9 @@
                     <ul class="users-list clearfix">
                         {% for teknikoa in teknikoas %}
                         <li>
-                            <a href="#" class="btnLogin" data-deknikoid="{{ teknikoa.id }}">
+                            <a href="#" class="btnLogin" data-deknikoid="{{ teknikoa.username }}">
                                 <img src="{{ asset('bundles/app/img/' ~ teknikoa.avatar) }}" alt="User Image">
-                                <a class="users-list-name" href="#">{{ teknikoa.username }}</a>
+                                <a class="users-list-name" href="#">{{ teknikoa.izena }}</a>
                             </a>
                         </li>
                         {% endfor %}
@@ -84,7 +84,7 @@
                     <!-- /.users-list -->
                 </div>
             </div>
-            <input id="username" type="hidden" name="username" value="">
+            <input id="username" type="text" name="username" value="">
         </form>
 
     </div>

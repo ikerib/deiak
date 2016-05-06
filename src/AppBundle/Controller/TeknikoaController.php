@@ -9,8 +9,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use AppBundle\Entity\Teknikoa;
 use AppBundle\Form\TeknikoaType;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
-use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
-use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 
 
 /**
@@ -21,22 +19,43 @@ use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 class TeknikoaController extends Controller
 {
 
+
     /**
      * Lists all Teknikoa entities.
      *
      * @Route("/login", name="teknikoa_login")
      * @Method("GET")
      */
-    public function loginAction()
+    public function loginAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
+        $logger = $this->get('logger');
+        $logger->info("111============================================");
+//
+//        $teknikoas = $em->getRepository('AppBundle:Teknikoa')->findAll();
+//
+//        return $this->render('teknikoa/login.html.twig', array(
+//            'teknikoas' => $teknikoas,
+//        ));
 
+        $helper = $this->get('security.authentication_utils');
+
+//        return $this->render('AcmeSecurityBundle:Security:login.html.twig', array(
+//            'last_username' => $helper->getLastUsername(),
+//            'error'         => $helper->getLastAuthenticationError(),
+//        ));
         $teknikoas = $em->getRepository('AppBundle:Teknikoa')->findAll();
-
         return $this->render('teknikoa/login.html.twig', array(
             'teknikoas' => $teknikoas,
+            'error' => $helper->getLastAuthenticationError(),
         ));
+//        return $this->render('FrontendBundle:Default:index.html.twig', array(
+//            'usuarios' => $usuarios,
+//            'error' => $error
+//        ));
+
     }
+
 
     /**
      * Lists all Teknikoa entities.
@@ -46,149 +65,94 @@ class TeknikoaController extends Controller
      */
     public function dologinAction(Request $request)
     {
-        $id = $request->request->get('username');
         $em = $this->getDoctrine()->getManager();
-        $user = $em->getRepository('AppBundle:Teknikoa')->findOneById($id);
+        $id = $request->request->get('username');
 
-        if (!$user) {
-            throw new UsernameNotFoundException("User not found");
-        } else {
-
-            $token = new UsernamePasswordToken($user, null, "secured_area", $user->getRoles());
+        $usuario = $em->getRepository('AppBundle:Teknikoa')->findOneByUsername($id);
+        if (!$usuario) {
+            throw $this->createNotFoundException('Unable to find $usuario entity.');
+        }
+//        if ($usuario->getAdmin() == 1) {
+            $token = new UsernamePasswordToken($usuario, null, 'main', array('ROLE_ADMIN'));
             $this->get('security.token_storage')->setToken($token);
             $this->get('session')->set('_security_main', serialize($token));
+            return $this->redirect($this->generateUrl('deiak'));
+//        } else {
+//            $token = new UsernamePasswordToken($usuario, null, 'main', array('ROLE_USER'));
+//            $this->get('security.context')->setToken($token);
+//            $this->get('session')->set('_security_main', serialize($token));
+//            return $this->redirect($this->generateUrl('menu'));
+//        }
+    }
 
-            $event = new InteractiveLoginEvent($request, $token);
-            $this->get("event_dispatcher")->dispatch("security.interactive_login", $event);
 
-            return $this->redirect($this->generateUrl("homepage"));
-        }
+//    /**
+//     * Lists all Teknikoa entities.
+//     *
+//     * @Route("/dologin", name="teknikoa_dologin")
+//     * @Method("POST")
+//     */
+//    public function dologinAction(Request $request)
+//    {
+//        $id = $request->request->get('username');
+//        $logger->info("888====>$id========================================");
+//        $logger->info($id);
+//        $logger->info('777============================================');
+//        $em = $this->getDoctrine()->getManager();
+//        $user = $em->getRepository('AppBundle:Teknikoa')->findOneById($id);
+//        $logger = $this->get('logger');
+//        $logger->info('666============================================');
+//        $logger->info($user);
+//        $logger->info('555============================================');
+//
+//        dump($user);
+//        if (!$user) {
+//            throw new UsernameNotFoundException("User not found");
+//        } else {
+//
+////            $token = new UsernamePasswordToken($user, null, "secured_area", $user->getRoles());
+////            $this->get('security.token_storage')->setToken($token);
+////            $this->get('session')->set('_security_main', serialize($token));
+////
+////            $event = new InteractiveLoginEvent($request, $token);
+////            $this->get("event_dispatcher")->dispatch("security.interactive_login", $event);
+//
+////            return $this->redirect($this->generateUrl("homepage"));
+//        }
+//
+////        $teknikoas = $em->getRepository('AppBundle:Teknikoa')->findAll();
+////        return $this->render('teknikoa/login.html.twig', array(
+////            'teknikoas' => $teknikoas,
+////        ));
+//    }
 
+    /**
+     * @Route("/logout", name="teknikoa_logout")
+     * @Method("GET")
+     */
+    public function logoutAction(Request $request)
+    {
+        $this->get('security.token_storage')->setToken(null);
+        $request->getSession()->invalidate();
+        return $this->redirect($this->generateUrl("teknikoa_login"));
+    }
+
+
+    /**
+     * @Route("/login_failure", name="teknikoa_login_failure")
+     * @Method("GET")
+     */
+    public function loginfailureAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
         $teknikoas = $em->getRepository('AppBundle:Teknikoa')->findAll();
+//        $request->getSession()->setFlash('error', $exception->getMessage());
+//        $error = $exception->getMessage();
+        dump($request);
         return $this->render('teknikoa/login.html.twig', array(
             'teknikoas' => $teknikoas,
         ));
     }
 
-    /**
-     * Lists all Teknikoa entities.
-     *
-     * @Route("/", name="teknikoa_index")
-     * @Method("GET")
-     */
-    public function indexAction()
-    {
-        $em = $this->getDoctrine()->getManager();
 
-        $teknikoas = $em->getRepository('AppBundle:Teknikoa')->findAll();
-
-        return $this->render('teknikoa/index.html.twig', array(
-            'teknikoas' => $teknikoas,
-        ));
-    }
-
-    /**
-     * Creates a new Teknikoa entity.
-     *
-     * @Route("/new", name="teknikoa_new")
-     * @Method({"GET", "POST"})
-     */
-    public function newAction(Request $request)
-    {
-        $teknikoa = new Teknikoa();
-        $form = $this->createForm('AppBundle\Form\TeknikoaType', $teknikoa);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($teknikoa);
-            $em->flush();
-
-            return $this->redirectToRoute('teknikoa_show', array('id' => $teknikoa->getId()));
-        }
-
-        return $this->render('teknikoa/new.html.twig', array(
-            'teknikoa' => $teknikoa,
-            'form' => $form->createView(),
-        ));
-    }
-
-    /**
-     * Finds and displays a Teknikoa entity.
-     *
-     * @Route("/{id}", name="teknikoa_show")
-     * @Method("GET")
-     */
-    public function showAction(Teknikoa $teknikoa)
-    {
-        $deleteForm = $this->createDeleteForm($teknikoa);
-
-        return $this->render('teknikoa/show.html.twig', array(
-            'teknikoa' => $teknikoa,
-            'delete_form' => $deleteForm->createView(),
-        ));
-    }
-
-    /**
-     * Displays a form to edit an existing Teknikoa entity.
-     *
-     * @Route("/{id}/edit", name="teknikoa_edit")
-     * @Method({"GET", "POST"})
-     */
-    public function editAction(Request $request, Teknikoa $teknikoa)
-    {
-        $deleteForm = $this->createDeleteForm($teknikoa);
-        $editForm = $this->createForm('AppBundle\Form\TeknikoaType', $teknikoa);
-        $editForm->handleRequest($request);
-
-        if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($teknikoa);
-            $em->flush();
-
-            return $this->redirectToRoute('teknikoa_edit', array('id' => $teknikoa->getId()));
-        }
-
-        return $this->render('teknikoa/edit.html.twig', array(
-            'teknikoa' => $teknikoa,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        ));
-    }
-
-    /**
-     * Deletes a Teknikoa entity.
-     *
-     * @Route("/{id}", name="teknikoa_delete")
-     * @Method("DELETE")
-     */
-    public function deleteAction(Request $request, Teknikoa $teknikoa)
-    {
-        $form = $this->createDeleteForm($teknikoa);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($teknikoa);
-            $em->flush();
-        }
-
-        return $this->redirectToRoute('teknikoa_index');
-    }
-
-    /**
-     * Creates a form to delete a Teknikoa entity.
-     *
-     * @param Teknikoa $teknikoa The Teknikoa entity
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createDeleteForm(Teknikoa $teknikoa)
-    {
-        return $this->createFormBuilder()
-            ->setAction($this->generateUrl('teknikoa_delete', array('id' => $teknikoa->getId())))
-            ->setMethod('DELETE')
-            ->getForm()
-        ;
-    }
 }
