@@ -11,56 +11,33 @@ use AppBundle\Form\TeknikoaType;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
 
-/**
- * Teknikoa controller.
- *
- * @Route("/teknikoa")
- */
-class TeknikoaController extends Controller
+class LoginController extends Controller
 {
 
 
     /**
      * Lists all Teknikoa entities.
      *
-     * @Route("/login", name="teknikoa_login")
+     * @Route("/login", name="login")
      * @Method("GET")
      */
     public function loginAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $logger = $this->get('logger');
-        $logger->info("111============================================");
-//
-//        $teknikoas = $em->getRepository('AppBundle:Teknikoa')->findAll();
-//
-//        return $this->render('teknikoa/login.html.twig', array(
-//            'teknikoas' => $teknikoas,
-//        ));
-
         $helper = $this->get('security.authentication_utils');
 
-//        return $this->render('AcmeSecurityBundle:Security:login.html.twig', array(
-//            'last_username' => $helper->getLastUsername(),
-//            'error'         => $helper->getLastAuthenticationError(),
-//        ));
         $teknikoas = $em->getRepository('AppBundle:Teknikoa')->findAll();
         return $this->render('teknikoa/login.html.twig', array(
             'teknikoas' => $teknikoas,
             'error' => $helper->getLastAuthenticationError(),
         ));
-//        return $this->render('FrontendBundle:Default:index.html.twig', array(
-//            'usuarios' => $usuarios,
-//            'error' => $error
-//        ));
-
     }
 
 
     /**
      * Lists all Teknikoa entities.
      *
-     * @Route("/dologin", name="teknikoa_dologin")
+     * @Route("/dologin", name="login_check")
      * @Method("POST")
      */
     public function dologinAction(Request $request)
@@ -76,7 +53,7 @@ class TeknikoaController extends Controller
             $token = new UsernamePasswordToken($usuario, null, 'main', array('ROLE_ADMIN'));
             $this->get('security.token_storage')->setToken($token);
             $this->get('session')->set('_security_main', serialize($token));
-            return $this->redirect($this->generateUrl('deiak'));
+            return $this->redirect($this->generateUrl('deia_index'));
 //        } else {
 //            $token = new UsernamePasswordToken($usuario, null, 'main', array('ROLE_USER'));
 //            $this->get('security.context')->setToken($token);
@@ -127,7 +104,7 @@ class TeknikoaController extends Controller
 //    }
 
     /**
-     * @Route("/logout", name="teknikoa_logout")
+     * @Route("/logout", name="logout")
      * @Method("GET")
      */
     public function logoutAction(Request $request)
@@ -139,7 +116,7 @@ class TeknikoaController extends Controller
 
 
     /**
-     * @Route("/login_failure", name="teknikoa_login_failure")
+     * @Route("/login_failure", name="login_failure")
      * @Method("GET")
      */
     public function loginfailureAction(Request $request)

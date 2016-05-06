@@ -58,13 +58,13 @@
     {% if error %}<div>{{ dump(error) }}</div>{% endif %}
     <div class="login-box">
     <div class="login-logo">
-        <a href="{{ path('teknikoa_login') }}"><b>Deiak</b></a>
+        <a href="{{ path('login') }}"><b>Deiak</b></a>
     </div>
 
     <div class="login-box-body">
         <p class="login-box-msg">Egin klik zure izenean saioa hasteko</p>
 
-        <form id="frmLogin" action="{{ path('teknikoa_dologin') }}" method="post">
+        <form id="frmLogin" action="{{ path('login_check') }}" method="post">
             <div class="box box-danger">
                 <div class="box-header with-border">
                     <h3 class="box-title">Teknikariak login</h3>
