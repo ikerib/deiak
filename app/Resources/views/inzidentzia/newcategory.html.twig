@@ -3,8 +3,6 @@
 {% block head_stylesheets %}
     {{ parent() }}
 
-    <link rel="stylesheet" href="{{ asset('bundles/app/css/datetimepicker/jquery-ui.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('bundles/app/css/datetimepicker/bootstrap-datetimepicker.min.css') }}">
     <link rel="stylesheet" href="{{ asset('bundles/app/fonts/glyphicons-halflings-regular.eot') }}">
 
     <style>
@@ -54,7 +52,7 @@
     <section class="content-header">
         <div class="row">
             <div class="col-sm-5">
-                <h1 class="title">Dei berria</h1>
+                <h1 class="title">Inzidentzia berria</h1>
             </div>
         </div>
     </section>
@@ -78,25 +76,26 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-xs-12">
-                                <div class="form-group  field-text">
-                                    {{ form_label(form.inzidentzia, 'Inzidentzia', { 'label_attr': {'class': 'control-label'} }) }}
-                                    {{ form_errors(form.inzidentzia) }}
-                                    {{ form_widget(form.inzidentzia, {'attr': {'class': 'form-control', 'data-widget':'select2', 'placeholder':'Aukeraru inzidentzia'}}) }}
-                                </div>
-                            </div>
-                            <div class="col-xs-12">
-                                <div class="form-group  field-text">
-                                    {{ form_label(form.azalpena, 'Azalpena (zer egin den, egin beharko den...)', { 'label_attr': {'class': 'control-label'} }) }}
-                                    {{ form_errors(form.azalpena) }}
-                                    {{ form_widget(form.azalpena, {'attr': {'class': 'form-control',}}) }}
-                                </div>
-                            </div>
-                            <div class="col-xs-12">
+                            <div class="col-xs-6">
                                 <div class="form-group  field-text">
                                     {{ form_label(form.teknikoa, 'Teknikoa', { 'label_attr': {'class': 'control-label'} }) }}
                                     {{ form_errors(form.teknikoa) }}
                                     {{ form_widget(form.teknikoa, {'attr': {'class': 'form-control'}}) }}
+                                </div>
+                            </div>
+                            <div class="col-xs-6">
+                                <div class="form-group  field-text">
+                                    {{ form_label(form.userid, 'Erabiltzailea', { 'label_attr': {'class': 'control-label'} }) }}
+                                    {{ form_errors(form.userid) }}
+                                    {{ form_widget(form.userid, {'attr': {'class': 'form-control'}}) }}
+                                </div>
+                            </div>
+
+                            <div class="col-xs-12">
+                                <div class="form-group  field-text">
+                                    {{ form_label(form.categories, 'Kategoriak', { 'label_attr': {'class': 'control-label'} }) }}
+                                    {{ form_errors(form.categories) }}
+                                    {{ form_widget(form.categories, {'attr': {'class': 'form-control multiple select2'}}) }}
                                 </div>
                             </div>
 
@@ -124,26 +123,14 @@
 {% block body_javascript %}
     {{ parent() }}
 
-    <script src="{{ asset('bundles/app/js/datetimepicker/bootstrap-datetimepicker.min.js') }}"></script>
-    <script src="{{ asset('bundles/app/js/datetimepicker/bootstrap-datetimepicker.eu.js') }}"></script>
 
     <script type="text/javascript">
         $(function() {
             $('#main').find('form select[data-widget="select2"]').select2({
-                theme: 'bootstrap'
+                theme: 'bootstrap',
+                tags: true
             });
         });
     </script>
-    <script type="text/javascript">
-        $('.form_datetime').datetimepicker({
-            language:  'eu',
-            weekStart: 1,
-            todayBtn:  1,
-            autoclose: 1,
-            todayHighlight: 1,
-            startView: 2,
-            forceParse: 0,
-            showMeridian: 1
-        });
-    </script>
+
 {% endblock %}

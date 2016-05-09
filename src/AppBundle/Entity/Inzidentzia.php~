@@ -31,7 +31,7 @@ class Inzidentzia
     /**
      * @var string
      *
-     * @ORM\Column(name="izena", type="string", length=255)
+     * @ORM\Column(name="izena", type="string", length=255, nullable=true)
      */
     private $izena;
 
@@ -83,8 +83,21 @@ class Inzidentzia
      */
     private $deiak;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="Category", inversedBy="inzidentziak")
+     * @ORM\JoinTable(name="category_inzidentzia")
+     */
+    private $categories;
+
+    public function addCategory(Category $category)
+    {
+        $category->addCategory($this); // synchronously updating inverse side
+        $this->$categories[] = $category;
+    }
+
     public function __construct() {
         $this->children = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->categories=new \Doctrine\Common\Collections\ArrayCollection();
         $this->createdAt = new \DateTime();
         $this->updatedAt = new \DateTime();
     }
@@ -312,5 +325,25 @@ class Inzidentzia
     public function getAzalpena()
     {
         return $this->azalpena;
+    }
+
+    /**
+     * Remove category
+     *
+     * @param \AppBundle\Entity\Category $category
+     */
+    public function removeCategory(\AppBundle\Entity\Category $category)
+    {
+        $this->categories->removeElement($category);
+    }
+
+    /**
+     * Get categories
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCategories()
+    {
+        return $this->categories;
     }
 }

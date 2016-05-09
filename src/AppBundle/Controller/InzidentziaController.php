@@ -36,6 +36,43 @@ class InzidentziaController extends Controller
     /**
      * Creates a new Inzidentzia entity.
      *
+     * @Route("/newcategory", name="inzidentzia_newcategory")
+     * @Method({"GET", "POST"})
+     */
+    public function newcategoryAction(Request $request)
+    {
+        $emocs = $this->getDoctrine()->getManager('ocs');
+        $connection = $emocs->getConnection();
+        $statement = $connection->prepare("SELECT * FROM hardware WHERE USERID = :id");
+        $statement->bindValue('id', 'iibarguren');
+        $statement->execute();
+        $results = $statement->fetchAll();
+
+        $inzidentzium = new Inzidentzia();
+        $user = $this->getUser();
+        $inzidentzium->setTeknikoa($user);
+        $form = $this->createForm('AppBundle\Form\InzidentziacategoryType', $inzidentzium);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($inzidentzium);
+            $em->flush();
+
+            return $this->redirectToRoute('inzidentzia_show', array('id' => $inzidentzium->getId()));
+        }
+
+        return $this->render('inzidentzia/newcategory.html.twig', array(
+            'ocs'           => $results[0],
+            'inzidentzium' => $inzidentzium,
+            'form' => $form->createView(),
+        ));
+    }
+
+
+    /**
+     * Creates a new Inzidentzia entity.
+     *
      * @Route("/new", name="inzidentzia_new")
      * @Method({"GET", "POST"})
      */
@@ -49,6 +86,8 @@ class InzidentziaController extends Controller
         $results = $statement->fetchAll();
 
         $inzidentzium = new Inzidentzia();
+        $user = $this->getUser();
+        $inzidentzium->setTeknikoa($user);
         $form = $this->createForm('AppBundle\Form\InzidentziaType', $inzidentzium);
         $form->handleRequest($request);
 

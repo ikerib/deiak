@@ -14,6 +14,14 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
+        return $this->render('default/home.html.twig');
+    }
+
+    /**
+     * @Route("/deiberria", name="dei_berria")
+     */
+    public function deiberriaAction(Request $request)
+    {
 
         $emocs = $this->getDoctrine()->getManager('ocs');
         $connection = $emocs->getConnection();
@@ -31,4 +39,5 @@ class DefaultController extends Controller
             'inzidentziak'  => $inzidentziak
         ));
     }
+    
 }

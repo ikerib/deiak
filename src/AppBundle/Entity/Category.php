@@ -61,9 +61,19 @@ class Category
      */
     private $parent;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="Inzidentzia", mappedBy="categories")
+     */
+    private $inzidentziak;
+    public function addInzidentzia(Inzidentzia $inzidentzia)
+    {
+        $this->inzidentziak[] = $inzidentzia;
+    }
+
 
     public function __construct() {
         $this->children = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->inzidentziak = new \Doctrine\Common\Collections\ArrayCollection();
         $this->createdAt = new \DateTime();
         $this->updatedAt = new \DateTime();
     }
@@ -220,5 +230,39 @@ class Category
     public function getParent()
     {
         return $this->parent;
+    }
+
+    /**
+     * Add inzidentziak
+     *
+     * @param \AppBundle\Entity\Inzidentzia $inzidentziak
+     *
+     * @return Category
+     */
+    public function addInzidentziak(\AppBundle\Entity\Inzidentzia $inzidentziak)
+    {
+        $this->inzidentziak[] = $inzidentziak;
+
+        return $this;
+    }
+
+    /**
+     * Remove inzidentziak
+     *
+     * @param \AppBundle\Entity\Inzidentzia $inzidentziak
+     */
+    public function removeInzidentziak(\AppBundle\Entity\Inzidentzia $inzidentziak)
+    {
+        $this->inzidentziak->removeElement($inzidentziak);
+    }
+
+    /**
+     * Get inzidentziak
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getInzidentziak()
+    {
+        return $this->inzidentziak;
     }
 }

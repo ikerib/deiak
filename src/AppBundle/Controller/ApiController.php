@@ -26,4 +26,31 @@ class ApiController extends FOSRestController
         return $this->handleView($view);
 
     }
+
+    public function getCategoryAction()
+    {
+
+        $repository = $this->getDoctrine()->getManager()
+            ->getRepository('AppBundle:Category');
+
+        $kategoriak = $repository->findAll();
+
+        $view = $this->view($kategoriak);
+        return $this->handleView($view);
+
+    }
+
+    public function getoneCategoryAction($id)
+    {
+
+        $repository = $this->getDoctrine()->getManager()
+            ->getRepository('AppBundle:Category');
+
+        $kategoriak = $repository->findBy(array('parent' => $id));
+
+        $view = $this->view($kategoriak);
+        return $this->handleView($view);
+
+    }
+
 }
