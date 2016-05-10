@@ -1,6 +1,7 @@
 imports:
     - { resource: parameters.yml }
     - { resource: parametersocs.yml }
+    - { resource: parametersldap.yml }
     - { resource: security.yml }
     - { resource: services.yml }
     - { resource: admin/ }

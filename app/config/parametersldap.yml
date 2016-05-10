@@ -1,0 +1,8 @@
+parameters:
+    ldap_username: administrator
+    ldap_password: Wallander20110
+    ldap_domain: pasaia.net
+    ldap_host: donibane.pasaia.net
+    ldap_dc: pasaia
+    ldap_dc2: net
+
