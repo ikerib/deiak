@@ -1,0 +1,95 @@
+{% extends 'base.html.twig' %}
+
+{% block body_class %} skin-blue {% endblock %}
+
+{% block main %}
+    <div id="flash-messages"></div>
+    <section class="content-header">
+        <div class="row">
+            <div class="col-sm-5">
+                <h1 class="title">Bilatu erabiltzailea</h1>
+            </div>
+        </div>
+    </section>
+
+    <section id="main" class="content">
+        <div class="row">
+            <div class="col-sm-12 large">
+                <div class="box box-primary">
+                    <div class="box-header">
+                        <i class="fa fa-edit"></i>
+                        <h3 class="box-title">Sartu datuak eta gorde</h3>
+                        <p>Deitu duen extensioak ez du erabiltzeilerik ezarrita. Aukeratu hemen, alaber, nahi izanez gero,
+                        'Gorde' botoia erabiliz, erabiltzailea - luzapen horretara ezarri ahalko duzu betirako.</p>
+                    </div>
+                    <div class="box-body pad">
+                        <div class="row">
+                            <div class="col-sm-12 large">
+                                &nbsp;
+                                <br>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <form action="{{ path('deia_erabiltzaileluzapena') }}" method="post">
+                                <div class="col-xs-12">
+                                    <div class="form-group  field-text">
+                                        <label class="control-label required" for="ext">Luzapena</label>
+                                        <input class="form-control" type="text" name="ext" value="{{ ext }}">
+                                    </div>
+                                </div>
+                                <div class="col-xs-12">
+                                    <div class="form-group  field-text">
+                                        <label class="control-label required" for="userid">Erabiltzailea</label>
+                                        <select class="form-control select2" name="userid" data-width="100%">
+                                            <option value="" disabled selected>Aukeratu bat</option>
+                                            {% for key,val in users %}
+                                                <option value="{{ val.userid }}">{{ val.last_name ~ ", " ~ val.first_name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 form-actions">
+                                    <div class="form-group">
+                                        <div id="form-actions-row">
+                                            <button type="submit" class="btn btn-primary">
+                                                <i class="fa fa-save"></i> Aldaketak gorde
+                                            </button>
+                                            <button type="button" class="btn btn-success">
+                                                <i class="fa fa-go"></i> Aukeratu
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
+{% block body_javascript %}
+    {{ parent() }}
+
+    <script type="text/javascript">
+        $(function() {
+            $('.select2').select2({
+                theme: 'bootstrap'
+            });
+
+            $(".btn").on('click', function (e) {
+                var mival = $(".select2").val();
+
+                if ( mival === null ) {
+                    alert("Aukeratu erabiltzailea mesedez");
+                    e.preventDefault();
+                }
+
+            });
+
+        });
+    </script>
+
+{% endblock %}

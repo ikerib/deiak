@@ -7,8 +7,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Doctrine\ORM\EntityRepository;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
+use Ivory\CKEditorBundle\Form\Type\CKEditorType;
 
 class InzidentziacategoryType extends AbstractType
 {
@@ -41,6 +40,7 @@ class InzidentziacategoryType extends AbstractType
 
             ->add('userid')            
             ->add('teknikoa')
+            ->add('azalpena',CKEditorType::class)
             ->add('konpondua')
         ;
     }

@@ -36,21 +36,22 @@ class InzidentziaController extends Controller
     /**
      * Creates a new Inzidentzia entity.
      *
-     * @Route("/newcategory", name="inzidentzia_newcategory")
+     * @Route("/berria/{userid}", name="inzidentzia_berria")
      * @Method({"GET", "POST"})
      */
-    public function newcategoryAction(Request $request)
+    public function berriaAction(Request $request, $userid)
     {
         $emocs = $this->getDoctrine()->getManager('ocs');
         $connection = $emocs->getConnection();
         $statement = $connection->prepare("SELECT * FROM hardware WHERE USERID = :id");
-        $statement->bindValue('id', 'iibarguren');
+        $statement->bindValue('id', $userid);
         $statement->execute();
         $results = $statement->fetchAll();
 
         $inzidentzium = new Inzidentzia();
         $user = $this->getUser();
         $inzidentzium->setTeknikoa($user);
+        $inzidentzium->setUserid($userid);
         $form = $this->createForm('AppBundle\Form\InzidentziacategoryType', $inzidentzium);
         $form->handleRequest($request);
 
