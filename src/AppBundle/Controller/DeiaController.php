@@ -55,15 +55,15 @@ class DeiaController extends Controller
         $statement = $connection->prepare("UPDATE accountinfo
                                             INNER JOIN hardware
                                             ON accountinfo.HARDWARE_ID = hardware.ID
-                                            SET accountinfo.luzapena = ':ext'
-                                            WHERE hardware.USERID = ':userid'; ");
+                                            SET accountinfo.luzapena = :ext
+                                            WHERE hardware.USERID = :userid");
         $statement->bindValue('ext', $ext);
         $statement->bindValue('userid', $userid);
-        $resp = $statement->execute();
+        return $resp = $statement->execute();
 
-        return $this->redirectToRoute('inzidentzia_berria', array(
-            'userid' => $userid,
-        ));
+//        return $this->redirectToRoute('inzidentzia_berria', array(
+//            'userid' => $userid,
+//        ));
     }
 
     /**

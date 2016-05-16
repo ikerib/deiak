@@ -18,26 +18,16 @@ class InzidentziacategoryType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('categories', EntityType::class, array(
-                'class' => 'AppBundle:Category',
-                'query_builder' => function (EntityRepository $er) {
-                    return $er->createQueryBuilder('b');
-                },
-                'multiple' => true,
-                'required' => true,
-                'placeholder' => 'Aukeratu Kategoria'
-            ))
 //            ->add('categories', EntityType::class, array(
 //                'class' => 'AppBundle:Category',
 //                'query_builder' => function (EntityRepository $er) {
-//                    return $er->createQueryBuilder('b')
-//                        ->where('b.parent is NULL');
+//                    return $er->createQueryBuilder('b');
 //                },
 //                'multiple' => true,
 //                'required' => true,
 //                'placeholder' => 'Aukeratu Kategoria'
 //            ))
-
+            ->add('categories')
             ->add('userid')            
             ->add('teknikoa')
             ->add('azalpena',CKEditorType::class)

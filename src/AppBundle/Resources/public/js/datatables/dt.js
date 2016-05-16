@@ -42,7 +42,7 @@ $(function () {
         var midata=table.row( this ).data();
 
         var url = Routing.generate('deiak');
-        console.log(url);
+        
 
         $('#tdeiak').DataTable ({
             "ajax": url,

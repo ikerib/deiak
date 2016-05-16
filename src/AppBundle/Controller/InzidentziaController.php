@@ -46,7 +46,12 @@ class InzidentziaController extends Controller
         $statement = $connection->prepare("SELECT * FROM hardware WHERE USERID = :id");
         $statement->bindValue('id', $userid);
         $statement->execute();
-        $results = $statement->fetchAll();
+        $info = $statement->fetchAll();
+
+        $statement = $connection->prepare("SELECT * FROM storages WHERE hardware_id = :id");
+        $statement->bindValue('id', $info[0]['ID']);
+        $statement->execute();
+        $storage = $statement->fetchAll();
 
         $inzidentzium = new Inzidentzia();
         $user = $this->getUser();
@@ -54,6 +59,9 @@ class InzidentziaController extends Controller
         $inzidentzium->setUserid($userid);
         $form = $this->createForm('AppBundle\Form\InzidentziacategoryType', $inzidentzium);
         $form->handleRequest($request);
+
+        $em = $this->getDoctrine()->getManager();
+        $kategorik = $em->getRepository('AppBundle:Category')->findByParent(null);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
@@ -64,9 +72,11 @@ class InzidentziaController extends Controller
         }
 
         return $this->render('inzidentzia/newcategory.html.twig', array(
-            'ocs'           => $results[0],
-            'inzidentzium' => $inzidentzium,
-            'form' => $form->createView(),
+            'ocs'           => $info[0],
+            'storage'       => $storage,
+            'inzidentzium'  => $inzidentzium,
+            'kategorik'     => $kategorik,
+            'form'          => $form->createView(),
         ));
     }
 

@@ -1173,19 +1173,20 @@
         },
         {
             "name": "javiereguiluz/easyadmin-bundle",
-            "version": "v1.12.7",
+            "version": "v1.13.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/javiereguiluz/EasyAdminBundle.git",
-                "reference": "4ebb10ee3980c9fbfc00f6b4c399cd67efd18407"
+                "reference": "e3bf2105e60f8fad6cf9beee0879503a81666606"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/javiereguiluz/EasyAdminBundle/zipball/4ebb10ee3980c9fbfc00f6b4c399cd67efd18407",
-                "reference": "4ebb10ee3980c9fbfc00f6b4c399cd67efd18407",
+                "url": "https://api.github.com/repos/javiereguiluz/EasyAdminBundle/zipball/e3bf2105e60f8fad6cf9beee0879503a81666606",
+                "reference": "e3bf2105e60f8fad6cf9beee0879503a81666606",
                 "shasum": ""
             },
             "require": {
+                "doctrine/cache": "~1.5",
                 "doctrine/common": "^2.4.0",
                 "doctrine/doctrine-bundle": "~1.2",
                 "doctrine/orm": "~2.3",
@@ -1225,7 +1226,10 @@
             "autoload": {
                 "psr-4": {
                     "JavierEguiluz\\Bundle\\EasyAdminBundle\\": ""
-                }
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -1248,7 +1252,7 @@
                 "backend",
                 "generator"
             ],
-            "time": "2016-04-26 17:39:14"
+            "time": "2016-05-11 17:22:05"
         },
         {
             "name": "jdorn/sql-formatter",
@@ -2518,16 +2522,16 @@
         },
         {
             "name": "symfony/symfony",
-            "version": "v3.0.5",
+            "version": "v3.0.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/symfony.git",
-                "reference": "10c83b58fbb42be516377de54962a758695ad964"
+                "reference": "a821ed51b87f5ceda834140e5f0c06e9547a86d4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/symfony/zipball/10c83b58fbb42be516377de54962a758695ad964",
-                "reference": "10c83b58fbb42be516377de54962a758695ad964",
+                "url": "https://api.github.com/repos/symfony/symfony/zipball/a821ed51b87f5ceda834140e5f0c06e9547a86d4",
+                "reference": "a821ed51b87f5ceda834140e5f0c06e9547a86d4",
                 "shasum": ""
             },
             "require": {
@@ -2644,7 +2648,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2016-05-03 05:58:56"
+            "time": "2016-05-09 22:13:31"
         },
         {
             "name": "twig/extensions",
@@ -2904,7 +2908,7 @@
         },
         {
             "name": "symfony/phpunit-bridge",
-            "version": "v3.0.5",
+            "version": "v3.0.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/phpunit-bridge.git",

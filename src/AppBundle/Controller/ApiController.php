@@ -27,7 +27,7 @@ class ApiController extends FOSRestController
 
     }
 
-    public function getCategoryAction()
+    public function getCategoriesAction()
     {
 
         $repository = $this->getDoctrine()->getManager()
@@ -40,9 +40,8 @@ class ApiController extends FOSRestController
 
     }
 
-    public function getoneCategoryAction($id)
+    public function getCategoryAction($id)
     {
-
         $repository = $this->getDoctrine()->getManager()
             ->getRepository('AppBundle:Category');
 
@@ -51,6 +50,6 @@ class ApiController extends FOSRestController
         $view = $this->view($kategoriak);
         return $this->handleView($view);
 
-    }
+    } // "get_category"             [GET] /category/{id}
 
 }

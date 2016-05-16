@@ -9,3 +9,10 @@
 .paginate_button{
     display: inline !important;
 }
+
+.main-sidebar, .left-side {
+    width: 275px !important;
+}
+.content-wrapper, .right-side, .main-footer {
+    margin-left: 275px;
+}

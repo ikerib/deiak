@@ -7,7 +7,6 @@
 
     <style>
         .ui-autocomplete-loading {
-            /*background: white url("/web/bundles/app/img/ui-anim_basic_16x16.gif") right center no-repeat;*/
             background: white url({{ asset('bundles/app/img/ui-anim_basic_16x16.gif') }}) right center no-repeat;
         }
     </style>
@@ -34,15 +33,37 @@
             {% if ocs.OSCOMMENTS is defined %}
                 <li>{{ ocs.OSCOMMENTS}}</li>
             {% endif %}
+            {% if ocs.PROCESSORT is defined %}
+                <li>CPU: {{ ocs.PROCESSORT }}</li>
+            {% endif %}
+            {% if ocs.MEMORY is defined %}
+                <li>
+                    <span class="label">Ram: {{ (ocs.MEMORY / 1024) | round }} Gb</span>
+                    {% for s in storage %}
+                        {% if s.TYPE == "Fixedxhard disk media" %}
+                            <span class="label bg-green">HDD: {{ (s.DISKSIZE / 1024) |round }} Gb</span>
+                            {% if 'KINGSTON' in s.NAME %}
+                                <span class="label bg-red">SSD</span>
+                            {% endif %}
+                        {% elseif s.TYPE == "CD-ROM" %}
+                            <span class="label bg-orange">CDROM</span>
+                        {% endif %}
+                    {% endfor %}
+                </li>
+            {% endif %}
         </ul>
 
-        {% block main_menu_wrapper %}
-            {{ include([
-            _entity_config is defined ? _entity_config.templates.menu,
-            easyadmin_config('design.templates.menu'),
-            '@EasyAdmin/default/menu.html.twig'
-            ]) }}
-        {% endblock main_menu_wrapper %}
+        <ul class="sidebar-menu">
+            <li class="header">Bestea</li>
+            <li class="treeview">
+                <a href="#"><i class="fa fa-chevron-circle-right"></i> klik</a>
+                <ul class="treeview-menu">
+                    <li>kaka</li>
+                    <li>kako</li>
+                </ul>
+            </li>
+        </ul>
+
     </section>
 
 {% endblock %}
@@ -56,6 +77,7 @@
             </div>
         </div>
     </section>
+
 
     <section id="main" class="content">
         {{ form_start(form) }}
@@ -91,11 +113,26 @@
                                 </div>
                             </div>
 
+                            <div class="col-xs-6">
+                                <div class="form-group">
+                                    <select multiple name="kat_parent" id="aita" title="Kategoria" class="form-control">
+                                        {% for k in kategorik %}
+                                            <option value="{{ k.id }}">{{ k }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <select multiple name="kat_child" id="semea" title="Azpikategoria" class="form-control"></select>
+                                </div>
+                            </div>
+
                             <div class="col-xs-12">
                                 <div class="form-group  field-text">
                                     {{ form_label(form.categories, 'Kategoriak', { 'label_attr': {'class': 'control-label'} }) }}
                                     {{ form_errors(form.categories) }}
-                                    {{ form_widget(form.categories, {'attr': {'class': 'form-control multiple select2'}}) }}
+                                    {{ form_widget(form.categories, {'attr': {'class': 'form-control'}}) }}
                                 </div>
                             </div>
 
@@ -123,14 +160,49 @@
 {% block body_javascript %}
     {{ parent() }}
 
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
 
     <script type="text/javascript">
+
         $(function() {
-            $('#main').find('form select[data-widget="select2"]').select2({
+
+            $('#inzidentziacategory_categories').select2({
                 theme: 'bootstrap',
                 tags: true
             });
+
+            $('#aita').on("click", function() {
+                var url;
+                var mival = $(this).val();
+                url = Routing.generate('get_category', {'id': mival});
+
+                $.getJSON(url, function(data) {
+                    $("#semea").find('option').remove();
+                    $.each(data, function() {
+                        $("#semea").append('<option value="' + this.id + '">' + this.name + '</option>');
+                    })
+                })
+
+            });
+
+            $('#semea').on("click", function () {
+                var sval = [];
+                sval = $('#inzidentziacategory_categories').val();
+                if (sval !== null) {
+                    sval.push($(this).val());
+                } else {
+                    sval = $(this).val();
+                }
+                $('#inzidentziacategory_categories').val(sval).trigger("change");
+            });
+
         });
+
+
+
+
+
     </script>
 
 {% endblock %}
