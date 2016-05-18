@@ -68,82 +68,48 @@ class InzidentziaController extends Controller
             $em->persist($inzidentzium);
             $em->flush();
 
-            return $this->redirectToRoute('inzidentzia_show', array('id' => $inzidentzium->getId()));
+            return $this->redirectToRoute('inzidentzia_edit', array('id' => $inzidentzium->getId()));
         }
+
+        $helper = $this->get('app.helper.ldap');
+        $users = $helper->getLdapUsers();
+
 
         return $this->render('inzidentzia/newcategory.html.twig', array(
             'ocs'           => $info[0],
             'storage'       => $storage,
             'inzidentzium'  => $inzidentzium,
             'kategorik'     => $kategorik,
+            'users'         => $users,
             'form'          => $form->createView(),
         ));
     }
 
-
     /**
-     * Creates a new Inzidentzia entity.
-     *
-     * @Route("/new", name="inzidentzia_new")
-     * @Method({"GET", "POST"})
-     */
-    public function newAction(Request $request)
-    {
-        $emocs = $this->getDoctrine()->getManager('ocs');
-        $connection = $emocs->getConnection();
-        $statement = $connection->prepare("SELECT * FROM hardware WHERE USERID = :id");
-        $statement->bindValue('id', 'iibarguren');
-        $statement->execute();
-        $results = $statement->fetchAll();
-
-        $inzidentzium = new Inzidentzia();
-        $user = $this->getUser();
-        $inzidentzium->setTeknikoa($user);
-        $form = $this->createForm('AppBundle\Form\InzidentziaType', $inzidentzium);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($inzidentzium);
-            $em->flush();
-
-            return $this->redirectToRoute('inzidentzia_show', array('id' => $inzidentzium->getId()));
-        }
-
-        return $this->render('inzidentzia/new.html.twig', array(
-            'ocs'           => $results[0],
-            'inzidentzium' => $inzidentzium,
-            'form' => $form->createView(),
-        ));
-    }
-
-    /**
-     * Finds and displays a Inzidentzia entity.
-     *
-     * @Route("/{id}", name="inzidentzia_show")
-     * @Method("GET")
-     */
-    public function showAction(Inzidentzia $inzidentzium)
-    {
-        $deleteForm = $this->createDeleteForm($inzidentzium);
-
-        return $this->render('inzidentzia/show.html.twig', array(
-            'inzidentzium' => $inzidentzium,
-            'delete_form' => $deleteForm->createView(),
-        ));
-    }
-
-    /**
-     * Displays a form to edit an existing Inzidentzia entity.
      *
      * @Route("/{id}/edit", name="inzidentzia_edit")
      * @Method({"GET", "POST"})
      */
     public function editAction(Request $request, Inzidentzia $inzidentzium)
     {
+        $emocs = $this->getDoctrine()->getManager('ocs');
+        $connection = $emocs->getConnection();
+        $statement = $connection->prepare("SELECT * FROM hardware WHERE USERID = :id");
+        $statement->bindValue('id', $inzidentzium->getUserid());
+        $statement->execute();
+        $info = $statement->fetchAll();
+
+        $statement = $connection->prepare("SELECT * FROM storages WHERE hardware_id = :id");
+        $statement->bindValue('id', $info[0]['ID']);
+        $statement->execute();
+        $storage = $statement->fetchAll();
+
         $deleteForm = $this->createDeleteForm($inzidentzium);
-        $editForm = $this->createForm('AppBundle\Form\InzidentziaType', $inzidentzium);
+        $editForm = $this->createForm('AppBundle\Form\InzidentziacategoryType', $inzidentzium);
         $editForm->handleRequest($request);
+
+        $em = $this->getDoctrine()->getManager();
+        $kategorik = $em->getRepository('AppBundle:Category')->findByParent(null);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $em = $this->getDoctrine()->getManager();
@@ -154,8 +120,11 @@ class InzidentziaController extends Controller
         }
 
         return $this->render('inzidentzia/edit.html.twig', array(
+            'ocs'           => $info[0],
+            'storage'       => $storage,
             'inzidentzium' => $inzidentzium,
-            'edit_form' => $editForm->createView(),
+            'kategorik'     => $kategorik,
+            'form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         ));
     }

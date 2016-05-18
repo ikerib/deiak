@@ -51,7 +51,11 @@ class LoginController extends Controller
             $token = new UsernamePasswordToken($usuario, null, 'main', array('ROLE_ADMIN'));
             $this->get('security.token_storage')->setToken($token);
             $this->get('session')->set('_security_main', serialize($token));
-            return $this->redirect($this->generateUrl('deia_index'));
+//            return $this->redirect($this->generateUrl('deia_index'));
+            $referer = $request->headers->get('referer');
+            $baseUrl = $request->getBaseUrl();
+            $lastPath = substr($referer, strpos($referer, $baseUrl) + strlen($baseUrl));
+            return $this->get('router')->getMatcher()->match($lastPath);
     }
 
 
