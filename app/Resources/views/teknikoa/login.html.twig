@@ -86,7 +86,10 @@
             </div>
             <input id="username" type="hidden" name="username" value="">
             {% if app.request.get('_route') != app.request.headers.get('referer') %}
-                <input type="hidden" name="_target_path" value="{{ app.request.headers.get('referer') }}" />
+                <input type="text" name="_target_path" value="{{ app.request.headers.get('referer') }}" />
+            {% endif %}
+            {% if referer is defined %}
+                <input type="text" name="referer" value="{{ referer }}" />
             {% endif %}
         </form>
 

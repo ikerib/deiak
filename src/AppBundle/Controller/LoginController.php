@@ -27,8 +27,14 @@ class LoginController extends Controller
         $helper = $this->get('security.authentication_utils');
 
         $teknikoas = $em->getRepository('AppBundle:Teknikoa')->findAll();
+        $referer = $request->headers->get('referer');
+        dump($request->headers);
+        $referer = $request->server->get('HTTP_REFERER');
+        dump($request->server);
+        dump($referer);
         return $this->render('teknikoa/login.html.twig', array(
             'teknikoas' => $teknikoas,
+            'referer' => $referer,
             'error' => $helper->getLastAuthenticationError(),
         ));
     }
@@ -51,8 +57,9 @@ class LoginController extends Controller
             $token = new UsernamePasswordToken($usuario, null, 'main', array('ROLE_ADMIN'));
             $this->get('security.token_storage')->setToken($token);
             $this->get('session')->set('_security_main', serialize($token));
-//            return $this->redirect($this->generateUrl('deia_index'));
-            $referer = $request->headers->get('referer');
+            return $this->redirect($this->generateUrl('deia_index'));
+//            $referer = $request->headers->get('referer');
+            $referer = $request->request->get('_target_path');
             $baseUrl = $request->getBaseUrl();
             $lastPath = substr($referer, strpos($referer, $baseUrl) + strlen($baseUrl));
             return $this->get('router')->getMatcher()->match($lastPath);

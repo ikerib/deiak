@@ -110,12 +110,16 @@
                             </div>
                             <div class="col-xs-6">
                                 <div class="form-group  field-text">
-                                    {{ form_label(form.userid, 'Erabiltzailea', { 'label_attr': {'class': 'control-label'} }) }}
-                                    {{ form_errors(form.userid) }}
-                                    {{ form_widget(form.userid, {'attr': {'class': 'form-control'}}) }}
+                                    <label class="control-label required" for="userid">Erabiltzailea</label>
+                                    <select name="inzidentziacategory[userid]" id="userid" class="form-control">
+                                        {% for u in users %}
+                                            <option value="{{ u.userid }}">{{ u.userid }}</option>
+                                        {% endfor %}
+                                    </select>
                                 </div>
                             </div>
-
+                        </div>
+                        <div class="row">
                             <div class="col-xs-6">
                                 <div class="form-group">
                                     <select multiple name="kat_parent" id="aita" title="Kategoria" class="form-control">
@@ -130,6 +134,8 @@
                                     <select multiple name="kat_child" id="semea" title="Azpikategoria" class="form-control"></select>
                                 </div>
                             </div>
+                        </div>
+                        <div class="row">
 
                             <div class="col-xs-12">
                                 <div class="form-group  field-text">
@@ -138,7 +144,8 @@
                                     {{ form_widget(form.categories, {'attr': {'class': 'form-control'}}) }}
                                 </div>
                             </div>
-
+                        </div>
+                        <div class="row">
                             <div class="col-xs-12 form-actions" style="width: 100%;">
                                 <div class="form-group">
                                     <div id="form-actions-row">
@@ -169,6 +176,17 @@
     <script type="text/javascript">
 
         $(function() {
+
+            $('#userid').select2().on("change", function(e) {
+                $('#inzidentziacategory_userid').val(this.value);
+            });
+
+            var userid = $('#inzidentziacategory_userid').val();
+
+            if (userid!==null) {
+                $('#userid').val(userid).trigger("change");
+            }
+
 
             $('#inzidentziacategory_categories').select2({
                 theme: 'bootstrap',

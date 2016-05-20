@@ -9,6 +9,8 @@ security:
             pattern: ^/
             form_login:
                 provider: user_db
+                target_path_parameter: _target_path
+                use_referer: true
             logout:       true
             anonymous:    true
 
