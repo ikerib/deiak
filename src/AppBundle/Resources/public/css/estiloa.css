@@ -1,7 +1,7 @@
 
 .skin-blue ul li {
     color: #8aa4af;
-    padding: 5px 5px 5px 15px;
+    padding: 5px 5px 5px 0px;
     display: block;
     font-size: 14px;
 }
@@ -15,4 +15,18 @@
 }
 .content-wrapper, .right-side, .main-footer {
     margin-left: 275px;
+}
+
+.skin-blue .sidebar-menu > li > a {
+    background-color: transparent !important;
+}
+
+.skin-blue .sidebar-menu > li > a:hover {
+    background-color: #1e282c !important;
+}
+
+.skin-blue .sidebar-menu>li:hover>a, .skin-blue .sidebar-menu>li.active>a {
+    color: #fff;
+    background: #1e282c !important;
+    border-left-color: #3c8dbc;
 }

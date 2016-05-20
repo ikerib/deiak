@@ -98,10 +98,10 @@ fos_rest:
 fos_js_routing:
     routes_to_expose: [ deiak  ]
 
-#ivory_ck_editor:
-#    input_sync: true
-#    default_config: base_config
-#    configs:
-#        base_config:
-#            toolbar:
-#                - { name: "styles", items: ['Bold', 'Italic', 'BulletedList', 'Link'] }
+ivory_ck_editor:
+    input_sync: true
+    default_config: base_config
+    configs:
+        base_config:
+            toolbar:
+                - { name: "styles", items: ['Bold', 'Italic', 'BulletedList', 'Link'] }

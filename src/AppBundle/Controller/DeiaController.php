@@ -60,11 +60,11 @@ class DeiaController extends Controller
                                             WHERE hardware.USERID = :userid");
         $statement->bindValue('ext', $ext);
         $statement->bindValue('userid', $userid);
-        return $resp = $statement->execute();
+        $resp = $statement->execute();
 
-//        return $this->redirectToRoute('inzidentzia_berria', array(
-//            'userid' => $userid,
-//        ));
+        return $this->redirectToRoute('inzidentzia_berria', array(
+            'userid' => $userid,
+        ));
     }
 
     /**

@@ -39,7 +39,6 @@
             {% if ocs.MEMORY is defined %}
                 <li>
                     <span class="label">Ram: {{ (ocs.MEMORY / 1024) | round }} Gb</span>
-
                     {% for s in storage %}
                         {% if s.TYPE is defined %}
                             {% if s.TYPE == "Fixedxhard disk media" %}
@@ -54,18 +53,40 @@
                     {% endfor %}
                 </li>
             {% endif %}
-        </ul>
-
-        <ul class="sidebar-menu">
-            <li class="header">Bestea</li>
+            <li>&nbsp;</li>
+            <li class="header">Informazio areagotua</li>
             <li class="treeview">
-                <a href="#"><i class="fa fa-chevron-circle-right"></i> klik</a>
+                <a href="#"><i class="fa fa-print"></i> Inpresorak<i class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">
-                    <li>kaka</li>
-                    <li>kako</li>
+                    <select name="printer" id="printer">
+                        {% for p in printers %}
+                            <option>{{ p.NAME }} ({{ p.PORT }})</option>
+                        {% endfor %}
+                    </select>
+                    {#{% for p in printers %}#}
+                        {#<li><span>{{ p.NAME }} (<small>{{ p.PORT }}</span></small>)</li>#}
+                    {#{% endfor %}#}
+                </ul>
+            </li>
+            <li class="treeview">
+                <a href="#"><i class="fa fa-windows"></i> Aplikazioak<i class="fa fa-angle-left pull-right"></i></a>
+                <ul class="treeview-menu">
+                    <li>
+                        <select name="soft" id="soft">
+                            {% for s in soft %}
+                                <option>{{ s.NAME }}</option>
+                            {% endfor %}
+                        </select>
+                    </li>
+                    {#{% for s in soft %}#}
+                        {#<li>{{ s.NAME }}</li>#}
+                    {#{% endfor %}#}
                 </ul>
             </li>
         </ul>
+
+
+
 
     </section>
 
@@ -74,9 +95,15 @@
 {% block main %}
     <div id="flash-messages"></div>
     <section class="content-header">
+
         <div class="row">
             <div class="col-sm-5">
                 <h1 class="title">Inzidentzia berria</h1>
+            </div>
+            <div class="box-tools pull-right">
+                <a class="btn btn-danger">
+                    <i class="fa fa-thumbs-o-up"></i> Konpondua
+                </a>
             </div>
         </div>
     </section>
@@ -92,6 +119,7 @@
                         <i class="fa fa-edit"></i>
                         <h3 class="box-title">Sartu datuak eta gorde</h3>
                     </div>
+
                     <div class="box-body pad">
                         <div class="row">
                             <div class="col-sm-12 large">
@@ -136,12 +164,20 @@
                             </div>
                         </div>
                         <div class="row">
-
                             <div class="col-xs-12">
                                 <div class="form-group  field-text">
                                     {{ form_label(form.categories, 'Kategoriak', { 'label_attr': {'class': 'control-label'} }) }}
                                     {{ form_errors(form.categories) }}
                                     {{ form_widget(form.categories, {'attr': {'class': 'form-control'}}) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="form-group  field-text">
+                                    {{ form_label(form.azalpena, 'Azalpena', { 'label_attr': {'class': 'control-label'} }) }}
+                                    {{ form_errors(form.azalpena) }}
+                                    {{ form_widget(form.azalpena, {'attr': {'class': 'form-control'}}) }}
                                 </div>
                             </div>
                         </div>
@@ -156,14 +192,14 @@
                                     </div>
                                 </div>
                             </div>
-
                         </div>
-
                     </div>
                 </div>
             </div>
         </div>
-        {{ form_end(form) }}
+        <div style="display: none;">
+            {{ form_end(form) }}
+        </div>
     </section>
 
 {% endblock %}
@@ -177,6 +213,9 @@
 
         $(function() {
 
+            $('#soft').select2();
+            $('#printer').select2();
+
             $('#userid').select2().on("change", function(e) {
                 $('#inzidentziacategory_userid').val(this.value);
             });
@@ -186,7 +225,6 @@
             if (userid!==null) {
                 $('#userid').val(userid).trigger("change");
             }
-
 
             $('#inzidentziacategory_categories').select2({
                 theme: 'bootstrap',

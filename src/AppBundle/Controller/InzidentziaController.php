@@ -41,8 +41,6 @@ class InzidentziaController extends Controller
      */
     public function berriaAction(Request $request, $userid)
     {
-        
-
         $inzidentzium = new Inzidentzia();
         $user = $this->getUser();
         $inzidentzium->setTeknikoa($user);
@@ -70,6 +68,8 @@ class InzidentziaController extends Controller
         return $this->render('inzidentzia/newcategory.html.twig', array(
             'ocs'           => $ocs[0][0],
             'storage'       => $ocs[1],
+            'printers'      => $ocs[2],
+            'soft'          => $ocs[3],
             'inzidentzium'  => $inzidentzium,
             'kategorik'     => $kategorik,
             'users'         => $users,
