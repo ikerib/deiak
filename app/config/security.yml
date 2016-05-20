@@ -19,4 +19,5 @@ security:
         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/kudeatu/, role: ROLE_ADMIN }
+        - { path: ^/inzidentzia/, role: ROLE_ADMIN }
         - { path: ^/deia/, role: ROLE_ADMIN }

@@ -88,8 +88,8 @@
             {% if app.request.get('_route') != app.request.headers.get('referer') %}
                 <input type="text" name="_target_path" value="{{ app.request.headers.get('referer') }}" />
             {% endif %}
-            {% if referer is defined %}
-                <input type="text" name="referer" value="{{ referer }}" />
+            {% if app.session.get('_security.main.target_path') is defined %}
+                <input type="text" name="referer" value="{{ app.session.get('_security.main.target_path') }}" />
             {% endif %}
         </form>
 
