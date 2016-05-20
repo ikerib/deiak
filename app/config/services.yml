@@ -6,4 +6,8 @@ parameters:
 services:
   app.helper.ldap:
     class: AppBundle\helper\LdapHelper
+    arguments: ["@service_container"]
+
+  app.helper.sidebarinfo:
+    class: AppBundle\helper\SidebarinfoHelper
     arguments: ["@doctrine.orm.entity_manager","@service_container"]

@@ -9,15 +9,12 @@ namespace AppBundle\helper;
 
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Doctrine\ORM\EntityManager;
 
 class LdapHelper
 {
-    private $entityManager;
     private $container;
 
-    public function __construct(EntityManager $entityManager, ContainerInterface $container) {
-        $this->entityManager = $entityManager;
+    public function __construct(ContainerInterface $container) {
         $this->container = $container;
     }
 

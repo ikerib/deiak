@@ -22,14 +22,14 @@
                 <img src="{{ asset('bundles/app/img/avatar04.png') }}" class="img-circle" alt="User Image">
             </div>
             <div class="pull-left info">
-                <p>{{ ocs.NAME }}</p>
-                <p>{{ ocs.IPADDR }}</p>
+                <p>{% if ocs.NAME is defined %}{{ ocs.NAME }}{% endif %}</p>
+                <p>{% if ocs.IPADDR is defined %}{{ ocs.IPADDR }}{% endif %}</p>
             </div>
         </div>
 
         <ul class="sidebar-menu">
             <li class="header">Informazioa</li>
-            <li>{{ ocs.OSNAME}}</li>
+            <li>{% if ocs.OSNAME is defined %}{{ ocs.OSNAME}}{% endif %}</li>
             {% if ocs.OSCOMMENTS is defined %}
                 <li>{{ ocs.OSCOMMENTS}}</li>
             {% endif %}
@@ -39,14 +39,17 @@
             {% if ocs.MEMORY is defined %}
                 <li>
                     <span class="label">Ram: {{ (ocs.MEMORY / 1024) | round }} Gb</span>
+
                     {% for s in storage %}
-                        {% if s.TYPE == "Fixedxhard disk media" %}
-                            <span class="label bg-green">HDD: {{ (s.DISKSIZE / 1024) |round }} Gb</span>
-                            {% if 'KINGSTON' in s.NAME %}
-                                <span class="label bg-red">SSD</span>
+                        {% if s.TYPE is defined %}
+                            {% if s.TYPE == "Fixedxhard disk media" %}
+                                <span class="label bg-green">HDD: {{ (s.DISKSIZE / 1024) |round }} Gb</span>
+                                {% if 'KINGSTON' in s.NAME %}
+                                    <span class="label bg-red">SSD</span>
+                                {% endif %}
+                            {% elseif s.TYPE == "CD-ROM" %}
+                                <span class="label bg-orange">CDROM</span>
                             {% endif %}
-                        {% elseif s.TYPE == "CD-ROM" %}
-                            <span class="label bg-orange">CDROM</span>
                         {% endif %}
                     {% endfor %}
                 </li>

@@ -41,17 +41,7 @@ class InzidentziaController extends Controller
      */
     public function berriaAction(Request $request, $userid)
     {
-        $emocs = $this->getDoctrine()->getManager('ocs');
-        $connection = $emocs->getConnection();
-        $statement = $connection->prepare("SELECT * FROM hardware WHERE USERID = :id");
-        $statement->bindValue('id', $userid);
-        $statement->execute();
-        $info = $statement->fetchAll();
-
-        $statement = $connection->prepare("SELECT * FROM storages WHERE hardware_id = :id");
-        $statement->bindValue('id', $info[0]['ID']);
-        $statement->execute();
-        $storage = $statement->fetchAll();
+        
 
         $inzidentzium = new Inzidentzia();
         $user = $this->getUser();
@@ -71,13 +61,15 @@ class InzidentziaController extends Controller
             return $this->redirectToRoute('inzidentzia_edit', array('id' => $inzidentzium->getId()));
         }
 
-        $helper = $this->get('app.helper.ldap');
-        $users = $helper->getLdapUsers();
+        $helper_ldap = $this->get('app.helper.ldap');
+        $users = $helper_ldap->getLdapUsers();
 
+        $helper_sidebar = $this->get('app.helper.sidebarinfo');
+        $ocs = $helper_sidebar->getSidebarinfo($userid);
 
         return $this->render('inzidentzia/newcategory.html.twig', array(
-            'ocs'           => $info[0],
-            'storage'       => $storage,
+            'ocs'           => $ocs[0][0],
+            'storage'       => $ocs[1],
             'inzidentzium'  => $inzidentzium,
             'kategorik'     => $kategorik,
             'users'         => $users,
