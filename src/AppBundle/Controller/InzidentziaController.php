@@ -16,22 +16,6 @@ use AppBundle\Form\InzidentziaType;
  */
 class InzidentziaController extends Controller
 {
-    /**
-     * Lists all Inzidentzia entities.
-     *
-     * @Route("/", name="inzidentzia_index")
-     * @Method("GET")
-     */
-    public function indexAction()
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $inzidentzias = $em->getRepository('AppBundle:Inzidentzia')->findAll();
-
-        return $this->render('inzidentzia/index.html.twig', array(
-            'inzidentzias' => $inzidentzias,
-        ));
-    }
 
     /**
      * Creates a new Inzidentzia entity.
@@ -84,17 +68,12 @@ class InzidentziaController extends Controller
      */
     public function editAction(Request $request, Inzidentzia $inzidentzium)
     {
-        $emocs = $this->getDoctrine()->getManager('ocs');
-        $connection = $emocs->getConnection();
-        $statement = $connection->prepare("SELECT * FROM hardware WHERE USERID = :id");
-        $statement->bindValue('id', $inzidentzium->getUserid());
-        $statement->execute();
-        $info = $statement->fetchAll();
 
-        $statement = $connection->prepare("SELECT * FROM storages WHERE hardware_id = :id");
-        $statement->bindValue('id', $info[0]['ID']);
-        $statement->execute();
-        $storage = $statement->fetchAll();
+        $helper_ldap = $this->get('app.helper.ldap');
+        $users = $helper_ldap->getLdapUsers();
+
+        $helper_sidebar = $this->get('app.helper.sidebarinfo');
+        $ocs = $helper_sidebar->getSidebarinfo($inzidentzium->getUserid());
 
         $deleteForm = $this->createDeleteForm($inzidentzium);
         $editForm = $this->createForm('AppBundle\Form\InzidentziacategoryType', $inzidentzium);
@@ -111,11 +90,14 @@ class InzidentziaController extends Controller
             return $this->redirectToRoute('inzidentzia_edit', array('id' => $inzidentzium->getId()));
         }
 
-        return $this->render('inzidentzia/edit.html.twig', array(
-            'ocs'           => $info[0],
-            'storage'       => $storage,
-            'inzidentzium' => $inzidentzium,
+        return $this->render(':inzidentzia:newcategory.html.twig', array(
+            'ocs'           => $ocs[0][0],
+            'storage'       => $ocs[1],
+            'printers'      => $ocs[2],
+            'soft'          => $ocs[3],
+            'inzidentzium'  => $inzidentzium,
             'kategorik'     => $kategorik,
+            'users'         => $users,
             'form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         ));
