@@ -52,6 +52,11 @@
                         {% endif %}
                     {% endfor %}
                 </li>
+                <li>
+                    {% for n in net if n.IPADDRESS|slice(0,10) == '172.28.64.' %}
+                        <button id="btnWol" class="btn btn-xs btn-primary" data-ip="{{ n.IPADDRESS }}" data-mac="{{ n.MACADDR }}" >WOL</button>
+                    {% endfor %}
+                </li>
             {% endif %}
             <li>&nbsp;</li>
             <li class="header">Informazio areagotua</li>
@@ -63,9 +68,6 @@
                             <option>{{ p.NAME }} ({{ p.PORT }})</option>
                         {% endfor %}
                     </select>
-                    {#{% for p in printers %}#}
-                        {#<li><span>{{ p.NAME }} (<small>{{ p.PORT }}</span></small>)</li>#}
-                    {#{% endfor %}#}
                 </ul>
             </li>
             <li class="treeview">
@@ -78,9 +80,6 @@
                             {% endfor %}
                         </select>
                     </li>
-                    {#{% for s in soft %}#}
-                        {#<li>{{ s.NAME }}</li>#}
-                    {#{% endfor %}#}
                 </ul>
             </li>
         </ul>
@@ -106,7 +105,7 @@
                 </a>
             </div>
         </div>
-    </section>º
+    </section>
 
 
     <section id="main" class="content">
@@ -123,7 +122,9 @@
                     <div class="box-body pad">
                         <div class="row">
                             <div class="col-sm-12 large">
-                                &nbsp;
+                                &nbsp;<a data-toggle="modal" href="{{ path('fos_user_registration_register') }}" data-target="#myModal">click me</a>
+
+                                <div id="myModal"></div>
                                 <br>
                             </div>
                         </div>
@@ -203,6 +204,7 @@
     </section>
 
 {% endblock %}
+
 {% block body_javascript %}
     {{ parent() }}
 
@@ -255,6 +257,22 @@
                 }
                 $('#inzidentziacategory_categories').val(sval).trigger("change");
             });
+
+            $('#btnWol').on("click", function() {
+                var ip = $(this).data("ip");
+                var mac = $(this).data("mac");
+                var url = Routing.generate('inzidentzia_wol', {'ip': ip, 'mac': mac});
+
+                $.ajax({
+                    url: url,
+                    context: document.body
+                }).done(function() {
+                    $('#btnWol').html("WOL - bidalita" );
+                }).fail(function() {
+                    $('#btnWol').html("WOL - error" );
+                });
+
+            })
 
         });
 

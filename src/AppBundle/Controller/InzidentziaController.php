@@ -8,6 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use AppBundle\Entity\Inzidentzia;
 use AppBundle\Form\InzidentziaType;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * Inzidentzia controller.
@@ -54,6 +55,7 @@ class InzidentziaController extends Controller
             'storage'       => $ocs[1],
             'printers'      => $ocs[2],
             'soft'          => $ocs[3],
+            'net'           => $ocs[4],
             'inzidentzium'  => $inzidentzium,
             'kategorik'     => $kategorik,
             'users'         => $users,
@@ -95,6 +97,7 @@ class InzidentziaController extends Controller
             'storage'       => $ocs[1],
             'printers'      => $ocs[2],
             'soft'          => $ocs[3],
+            'net'           => $ocs[4],
             'inzidentzium'  => $inzidentzium,
             'kategorik'     => $kategorik,
             'users'         => $users,
@@ -137,5 +140,53 @@ class InzidentziaController extends Controller
             ->setMethod('DELETE')
             ->getForm()
         ;
+    }
+
+    /**
+     *
+     * @Route("/wol/{ip}/{mac}", name="inzidentzia_wol")
+     * @Method("GET")
+     */
+    public function WakeOnLanAction($ip, $mac) {
+        $addr_byte = explode(':', $mac);
+        $hw_addr = '';
+        for ($a=0; $a <6; $a++) $hw_addr .= chr(hexdec($addr_byte[$a]));
+        $msg = chr(255).chr(255).chr(255).chr(255).chr(255).chr(255);
+        for ($a = 1; $a <= 16; $a++) $msg .= $hw_addr;
+        // send it to the broadcast address using UDP
+        // SQL_BROADCAST option isn't help!!
+        $s = socket_create(AF_INET, SOCK_DGRAM, SOL_UDP);
+        if ($s == false) {
+            return array(FALSE,"Error creating socket. Code is '".socket_last_error($s)."' - " . socket_strerror(socket_last_error($s)));
+        }
+        else {
+            // setting a broadcast option to socket:
+            $opt_ret = socket_set_option($s, 1, 6, TRUE);
+            if($opt_ret <0) {
+                return array(FALSE, "setsockopt() failed, error: " . strerror($opt_ret)) ;
+            }
+            if(socket_sendto($s, $msg, strlen($msg), 0, $ip, 7)) {
+                socket_close($s);
+                return new JsonResponse(array('result' => "1"));
+//                return array(TRUE, "Magic packet sent");
+            }
+            else {
+//                return array(FALSE, "Magic packet failed");
+                return new JsonResponse(array('result' => "0"));
+            }
+        }
+    }
+
+    function CheckPort($host,$port) {
+        $starttime = microtime(true);
+        $conn = @fsockopen($host, $port, $errno, $errstr, 0.3);
+        $stoptime  = microtime(true);
+        if ($conn) {
+            fclose($conn);
+            $ping = round(($stoptime - $starttime) * 1000, 2);
+            return array(true,$errno,$errstr,$ping);
+        }
+        $ping = round(($stoptime - $starttime) * 1000, 2);
+        return array(false,$errno,$errstr,$ping);
     }
 }

@@ -9,6 +9,8 @@ namespace AppBundle\helper;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Doctrine\ORM\EntityManager;
+use Symfony\Component\Process\Process;
+use Symfony\Component\Process\Exception\ProcessFailedException;
 
 class SidebarinfoHelper
 {
@@ -45,12 +47,19 @@ class SidebarinfoHelper
         $statement->execute();
         $soft = $statement->fetchAll();
 
+        $statement = $connection->prepare("select * from networks where hardware_id = :id");
+        $statement->bindValue('id', $info[0]['ID']);
+        $statement->execute();
+        $net = $statement->fetchAll();
+
+
         $resp = [];
         $resp[0] = $info;
         $resp[1] = $storage;
         $resp[2] = $printers;
         $resp[3] = $soft;
-
+        $resp[4] = $net;
+        
         return $resp;
     }
 

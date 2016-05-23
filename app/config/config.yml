@@ -96,7 +96,7 @@ fos_rest:
                                                         # will eventually be JSON formated
 
 fos_js_routing:
-    routes_to_expose: [ deiak  ]
+    routes_to_expose: [ deiak, inzidentzia_wol ]
 
 ivory_ck_editor:
     input_sync: true

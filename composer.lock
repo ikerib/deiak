@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "eb5221229200e49758216f6475929230",
-    "content-hash": "587e34c0ba454838b7ef516757a85924",
+    "hash": "64262559be32102cca09bddd355508c3",
+    "content-hash": "8607da6cd0dc340e3afd1394f72b627b",
     "packages": [
         {
             "name": "bmatzner/jquery-bundle",
@@ -2029,12 +2029,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sunra/angularjs-symfony2-bundle.git",
-                "reference": "2c6ee5bade5683f960d378dc849dded112b07b82"
+                "reference": "7c1b2c20d1409cb52b159204b73644d9b69d7c2b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sunra/angularjs-symfony2-bundle/zipball/2c6ee5bade5683f960d378dc849dded112b07b82",
-                "reference": "2c6ee5bade5683f960d378dc849dded112b07b82",
+                "url": "https://api.github.com/repos/sunra/angularjs-symfony2-bundle/zipball/7c1b2c20d1409cb52b159204b73644d9b69d7c2b",
+                "reference": "7c1b2c20d1409cb52b159204b73644d9b69d7c2b",
                 "shasum": ""
             },
             "require": {
@@ -2064,7 +2064,7 @@
                 "bindonce",
                 "symfony"
             ],
-            "time": "2016-01-08 23:46:15"
+            "time": "2016-05-20 20:04:28"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -2649,6 +2649,44 @@
                 "framework"
             ],
             "time": "2016-05-09 22:13:31"
+        },
+        {
+            "name": "tomnomnom/phpwol",
+            "version": "0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/TomNomNom/phpwol.git",
+                "reference": "9126f22d57e4403e0569b1b5e9c91c697a394260"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/TomNomNom/phpwol/zipball/9126f22d57e4403e0569b1b5e9c91c697a394260",
+                "reference": "9126f22d57e4403e0569b1b5e9c91c697a394260",
+                "shasum": ""
+            },
+            "require-dev": {
+                "phpunit/phpunit": "3.7.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Phpwol": "./"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Tom Hudson",
+                    "email": "mail@tomnomnom.com",
+                    "homepage": "http://tomhudson.co.uk/"
+                }
+            ],
+            "description": "Wake On LAN for PHP",
+            "homepage": "https://github.com/TomNomNom/phpwol/",
+            "time": "2015-11-24 12:57:42"
         },
         {
             "name": "twig/extensions",
