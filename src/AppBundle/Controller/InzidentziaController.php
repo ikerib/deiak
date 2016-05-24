@@ -60,7 +60,7 @@ class InzidentziaController extends Controller
             'printers'      => $ocs[2],
             'soft'          => $ocs[3],
             'net'           => $ocs[4],
-            'inzidentzium'  => $inzidentzium,
+            'inzidentzia'  => $inzidentzium,
             'kategorik'     => $kategorik,
             'users'         => $users,
             'form'          => $form->createView(),
@@ -82,12 +82,14 @@ class InzidentziaController extends Controller
         $helper_sidebar = $this->get('app.helper.sidebarinfo');
         $ocs = $helper_sidebar->getSidebarinfo($inzidentzium->getUserid());
 
-        $deleteForm = $this->createDeleteForm($inzidentzium);
         $editForm = $this->createForm('AppBundle\Form\InzidentziacategoryType', $inzidentzium);
         $editForm->handleRequest($request);
 
         $em = $this->getDoctrine()->getManager();
         $kategorik = $em->getRepository('AppBundle:Category')->findByParent(null);
+
+        $category = new Category();
+        $frmInzidentzia = $this->createForm('AppBundle\Form\CategoryType', $category);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $em = $this->getDoctrine()->getManager();
@@ -103,49 +105,40 @@ class InzidentziaController extends Controller
             'printers'      => $ocs[2],
             'soft'          => $ocs[3],
             'net'           => $ocs[4],
-            'inzidentzium'  => $inzidentzium,
+            'inzidentzia'  => $inzidentzium,
             'kategorik'     => $kategorik,
             'users'         => $users,
             'form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            'frmInzidentzia' => $frmInzidentzia->createView(),
         ));
     }
 
-    /**
-     * Deletes a Inzidentzia entity.
-     *
-     * @Route("/{id}", name="inzidentzia_delete")
-     * @Method("DELETE")
-     */
-    public function deleteAction(Request $request, Inzidentzia $inzidentzium)
-    {
-        $form = $this->createDeleteForm($inzidentzium);
-        $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($inzidentzium);
-            $em->flush();
+    /**
+     * Displays a form to edit an existing Deia entity.
+     *
+     * @Route("/{id}/fix", name="inzidentzia_fix")
+     * @Method({"GET", "POST"})
+     */
+    public function fixAction(Request $request, Inzidentzia $inzi)
+    {
+        $em = $this->getDoctrine()->getManager();
+        
+        if ( $inzi->getKonpondua() == true) {
+            $inzi->setKonpondua(0);
+        } else {
+            $inzi->setKonpondua(1);
         }
-
-        return $this->redirectToRoute('inzidentzia_index');
+        $em->persist($inzi);
+        $em->flush();
+        $response = new JsonResponse();
+        $response->setData(array(
+            'id'        => $inzi->getId(),
+            'konponduta'=> $inzi->getKonpondua()
+        ));
+        return $response;
     }
 
-    /**
-     * Creates a form to delete a Inzidentzia entity.
-     *
-     * @param Inzidentzia $inzidentzium The Inzidentzia entity
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createDeleteForm(Inzidentzia $inzidentzium)
-    {
-        return $this->createFormBuilder()
-            ->setAction($this->generateUrl('inzidentzia_delete', array('id' => $inzidentzium->getId())))
-            ->setMethod('DELETE')
-            ->getForm()
-        ;
-    }
 
     /**
      *

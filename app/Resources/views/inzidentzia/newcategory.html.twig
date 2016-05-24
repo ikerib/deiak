@@ -100,7 +100,7 @@
                 <h1 class="title">Inzidentzia berria</h1>
             </div>
             <div class="box-tools pull-right">
-                <a class="btn btn-danger">
+                <a id="btn_fix" class="btn btn-danger">
                     <i class="fa fa-thumbs-o-up"></i> Konpondua
                 </a>
             </div>
@@ -152,50 +152,7 @@
                                     <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#myModal">
                                         + Kategoria
                                     </button>
-                                    <div id="myModal" class="modal">
-                                        <div class="modal-dialog">
-                                            {{ form_start(frmInzidentzia) }}
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                        <span aria-hidden="true">×</span></button>
-                                                    <h4 class="modal-title">Kategoria berria</h4>
-                                                </div>
-                                                <div class="modal-body">
 
-                                                    <div class="row">
-                                                        <div class="col-xs-6">
-                                                            <div class="form-group  field-text">
-                                                                {{ form_label(frmInzidentzia.name, 'Izena', { 'label_attr': {'class': 'control-label'} }) }}
-                                                                {{ form_errors(frmInzidentzia.name) }}
-                                                                {{ form_widget(frmInzidentzia.name, {'attr': {'class': 'form-control'}}) }}
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="row">
-                                                        <div class="col-xs-6">
-                                                            <div class="form-group  field-text">
-                                                                {{ form_label(frmInzidentzia.parent, 'Izena', { 'label_attr': {'class': 'control-label'} }) }}
-                                                                {{ form_errors(frmInzidentzia.parent) }}
-                                                                {{ form_widget(frmInzidentzia.parent, {'attr': {'class': 'form-control'}}) }}
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-
-
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
-                                                    <button id="btnSaveCategory" type="button" class="btn btn-outline">Gorde</button>
-                                                </div>
-                                            </div>
-                                            <!-- /.modal-content -->
-                                            {{ form_end(frmInzidentzia) }}
-                                        </div>
-                                        <!-- /.modal-dialog -->
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -249,10 +206,57 @@
                 </div>
             </div>
         </div>
-        <div style="display: none;">
+        <div style="display: hidden;">
+            <input type="text" id="inzidentzia_id" value="{{ inzidentzia.id }}">
+            {{ form_rest(form) }}
             {{ form_end(form) }}
         </div>
     </section>
+
+    <div id="myModal" class="modal">
+        <div class="modal-dialog">
+            {{ form_start(frmInzidentzia) }}
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title">Kategoria berria</h4>
+                </div>
+                <div class="modal-body">
+
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <div class="form-group  field-text">
+                                {{ form_label(frmInzidentzia.name, 'Izena', { 'label_attr': {'class': 'control-label'} }) }}
+                                {{ form_errors(frmInzidentzia.name) }}
+                                {{ form_widget(frmInzidentzia.name, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <div class="form-group  field-text">
+                                {{ form_label(frmInzidentzia.parent, 'Izena', { 'label_attr': {'class': 'control-label'} }) }}
+                                {{ form_errors(frmInzidentzia.parent) }}
+                                {{ form_widget(frmInzidentzia.parent, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
+                    <button id="btnSaveCategory" type="button" class="btn btn-outline">Gorde</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+            {{ form_end(frmInzidentzia) }}
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
 
 {% endblock %}
 
@@ -265,6 +269,14 @@
     <script type="text/javascript">
 
         $(function() {
+
+            if ( $('#inzidentziacategory_konpondua').prop('checked') === true ) {
+                $('#btn_fix').removeClass("btn-success");
+                $('#btn_fix').addClass("btn-danger");
+            } else {
+                $('#btn_fix').removeClass("btn-danger");
+                $('#btn_fix').addClass("btn-success");
+            }
 
             $('#btnSaveCategory').on("click", function (e) {
                 var url = Routing.generate('kudeatu_category_new');
@@ -314,6 +326,44 @@
                         console.log('Error : ' + errorThrown);
                     }
                 });
+            });
+
+            $('#btn_fix').on("click", function (e) {
+                var miid = $('#inzidentzia_id').val();
+                if ( miid === "" ) {
+                    // Oraindik ez da grabatu bera checkboz-a aldatuko dugu
+                    if ( $('#inzidentziacategory_konpondua').prop('checked') === true ) {
+                        $('#inzidentziacategory_konpondua').prop('checked', false);
+                        $('#btn_fix').removeClass("btn-success");
+                        $('#btn_fix').addClass("btn-danger");
+                    } else {
+                        $('#inzidentziacategory_konpondua').prop('checked', true);
+                        $('#btn_fix').removeClass("btn-danger");
+                        $('#btn_fix').addClass("btn-success");
+                    }
+                } else {
+                    var url = Routing.generate('inzidentzia_fix', {'id': miid} );
+                    $.ajax({
+                        type: "GET",
+                        url: url,
+                        success: function(data, dataType)
+                        {
+                            if (data.konponduta === 0) {
+                                $('#btn_fix').removeClass("btn-success");
+                                $('#btn_fix').addClass("btn-danger");
+                            } else {
+                                $('#btn_fix').removeClass("btn-danger");
+                                $('#btn_fix').addClass("btn-success");
+                            }
+
+                        },
+
+                        error: function(XMLHttpRequest, textStatus, errorThrown)
+                        {
+                            console.log('Error : ' + errorThrown);
+                        }
+                    });
+                }
             });
 
             $('#soft').select2();

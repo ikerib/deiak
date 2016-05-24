@@ -28,7 +28,7 @@ class CategoryType extends AbstractType
                 'placeholder' => 'Aukeratu Kategoria gurasoa'
             ))
 
-            ->add('name')
+            ->add('name',null,array('required'=>false))
         ;
     }
     
