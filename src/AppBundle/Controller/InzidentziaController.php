@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Category;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -33,6 +34,9 @@ class InzidentziaController extends Controller
         $form = $this->createForm('AppBundle\Form\InzidentziacategoryType', $inzidentzium);
         $form->handleRequest($request);
 
+        $category = new Category();
+        $frmInzidentzia = $this->createForm('AppBundle\Form\CategoryType', $category);
+
         $em = $this->getDoctrine()->getManager();
         $kategorik = $em->getRepository('AppBundle:Category')->findByParent(null);
 
@@ -60,6 +64,7 @@ class InzidentziaController extends Controller
             'kategorik'     => $kategorik,
             'users'         => $users,
             'form'          => $form->createView(),
+            'frmInzidentzia' => $frmInzidentzia->createView(),
         ));
     }
 

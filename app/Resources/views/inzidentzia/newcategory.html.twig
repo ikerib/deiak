@@ -122,9 +122,7 @@
                     <div class="box-body pad">
                         <div class="row">
                             <div class="col-sm-12 large">
-                                &nbsp;<a data-toggle="modal" href="{{ path('fos_user_registration_register') }}" data-target="#myModal">click me</a>
-
-                                <div id="myModal"></div>
+                                &nbsp;
                                 <br>
                             </div>
                         </div>
@@ -145,6 +143,59 @@
                                             <option value="{{ u.userid }}">{{ u.userid }}</option>
                                         {% endfor %}
                                     </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <div class="form-group  field-text">
+                                    <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#myModal">
+                                        + Kategoria
+                                    </button>
+                                    <div id="myModal" class="modal">
+                                        <div class="modal-dialog">
+                                            {{ form_start(frmInzidentzia) }}
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">×</span></button>
+                                                    <h4 class="modal-title">Kategoria berria</h4>
+                                                </div>
+                                                <div class="modal-body">
+
+                                                    <div class="row">
+                                                        <div class="col-xs-6">
+                                                            <div class="form-group  field-text">
+                                                                {{ form_label(frmInzidentzia.name, 'Izena', { 'label_attr': {'class': 'control-label'} }) }}
+                                                                {{ form_errors(frmInzidentzia.name) }}
+                                                                {{ form_widget(frmInzidentzia.name, {'attr': {'class': 'form-control'}}) }}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-xs-6">
+                                                            <div class="form-group  field-text">
+                                                                {{ form_label(frmInzidentzia.parent, 'Izena', { 'label_attr': {'class': 'control-label'} }) }}
+                                                                {{ form_errors(frmInzidentzia.parent) }}
+                                                                {{ form_widget(frmInzidentzia.parent, {'attr': {'class': 'form-control'}}) }}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
+                                                    <button id="btnSaveCategory" type="button" class="btn btn-outline">Gorde</button>
+                                                </div>
+                                            </div>
+                                            <!-- /.modal-content -->
+                                            {{ form_end(frmInzidentzia) }}
+                                        </div>
+                                        <!-- /.modal-dialog -->
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -214,6 +265,56 @@
     <script type="text/javascript">
 
         $(function() {
+
+            $('#btnSaveCategory').on("click", function (e) {
+                var url = Routing.generate('kudeatu_category_new');
+                var data = {};
+                data.name = $('#category_name').val();
+
+                var parent = $('#category_parent').val();
+
+                if (parent !== "") {
+                    data.parent = parent;
+                }
+
+
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: data,
+                    success: function(data, dataType)
+                    {
+                        if (( data.parent_id !== "" ) && ( data.parent_id !== undefined )){
+                            // begiratu parent-a badagoen dagoeneko
+                            if ( $("#aita option[value='"+ data.parent_id +"']").length === 0 ) {
+                                $('#aita').append($("<option></option>").attr("value",data.parent_id).text(data.parent_name));
+                                $('#category_parent').append($("<option></option>").attr("value",data.parent_id).text(data.parent_name));
+                            }
+                            $('#aita').val(data.parent_id);
+                            $('#semea').append($("<option></option>").attr("value",data.id).text(data.name));
+                            $('#semea').val(data.id);
+                        } else {
+                            $('#aita').append($("<option></option>").attr("value",data.id).text(data.name));
+                            $('#aita').val(data.id);
+                        }
+
+
+                        var values = $('#inzidentziacategory_categories').val();
+                        $('#inzidentziacategory_categories').append($("<option></option>").attr("value",data.id).text(data.name));
+                        $('#inzidentziacategory_categories').val(data.id).trigger("change");
+
+                        // Formulario hustu
+                        $('#category_name').val("");
+                        $('#category_parent').val("");
+                        $('#myModal').modal('toggle');
+                    },
+
+                    error: function(XMLHttpRequest, textStatus, errorThrown)
+                    {
+                        console.log('Error : ' + errorThrown);
+                    }
+                });
+            });
 
             $('#soft').select2();
             $('#printer').select2();
