@@ -271,11 +271,11 @@
         $(function() {
 
             if ( $('#inzidentziacategory_konpondua').prop('checked') === true ) {
-                $('#btn_fix').removeClass("btn-success");
-                $('#btn_fix').addClass("btn-danger");
-            } else {
                 $('#btn_fix').removeClass("btn-danger");
                 $('#btn_fix').addClass("btn-success");
+            } else {
+                $('#btn_fix').removeClass("btn-success");
+                $('#btn_fix').addClass("btn-danger");
             }
 
             $('#btnSaveCategory').on("click", function (e) {
