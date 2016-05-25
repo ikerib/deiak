@@ -1,0 +1,5 @@
+easy_admin:
+    entities:
+        Fitxatu:
+            class: AppBundle\Entity\Fitxatu
+            label: 'Fitxatu'

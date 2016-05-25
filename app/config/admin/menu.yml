@@ -3,6 +3,13 @@ easy_admin:
         datetime: 'Y/m/d h:i A e'
     design:
         menu:
+            - { label: 'Kategoriak', entity: 'Category',default: true }
+            - { label: 'Teknikoa', entity: 'Teknikoa' }
+            - { label: 'Deiak', entity: 'Deia' }
+            - { label: 'Fitxatu', entity: 'Fitxatu' }
+            - { label: 'Inzidentzia', entity: 'Inzidentzia' }
+            - { label: 'Itzuli', route: 'deia_index' }
+
 #            - { label: 'Maileguak', route: '#',default: true }
 #            - label: 'Bezero - Zigorrak'
 #              route: 'kudeatu_bezerozigorra_index'

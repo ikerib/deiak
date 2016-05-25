@@ -1,0 +1,5 @@
+easy_admin:
+    entities:
+        Deia:
+            class: AppBundle\Entity\Deia
+            label: 'Deia'

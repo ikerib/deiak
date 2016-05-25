@@ -1,0 +1,5 @@
+easy_admin:
+    entities:
+        Inzidentzia:
+            class: AppBundle\Entity\Inzidentzia
+            label: 'Inzidentzia'
