@@ -96,7 +96,7 @@ fos_rest:
                                                         # will eventually be JSON formated
 
 fos_js_routing:
-    routes_to_expose: [ deiak, inzidentzia_wol, kudeatu_category_new, inzidentzia_fix ]
+    routes_to_expose: [ deiak, inzidentzia_wol, kudeatu_category_new, inzidentzia_fix , inzidentzia_berria]
 
 ivory_ck_editor:
     input_sync: true

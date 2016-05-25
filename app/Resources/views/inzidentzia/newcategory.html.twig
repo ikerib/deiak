@@ -55,8 +55,10 @@
                 <li>
                     {% for n in net if n.IPADDRESS|slice(0,10) == '172.28.64.' %}
                         <button id="btnWol" class="btn btn-xs btn-primary" data-ip="{{ n.IPADDRESS }}" data-mac="{{ n.MACADDR }}" >WOL</button>
+                        <button id="btnGuacamole" class="btn btn-xs btn-warning" onclick="window.open('http://172.28.64.231:8080/guacamole/#/?username=guacadmin&password=guacadmin');">Guacamole</button>
                     {% endfor %}
                 </li>
+
             {% endif %}
             <li>&nbsp;</li>
             <li class="header">Informazio areagotua</li>
@@ -148,7 +150,7 @@
                         </div>
                         <div class="row">
                             <div class="col-xs-6">
-                                <div class="form-group  field-text">
+                                <div class="field-text">
                                     <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#myModal">
                                         + Kategoria
                                     </button>
@@ -206,7 +208,7 @@
                 </div>
             </div>
         </div>
-        <div style="display: hidden;">
+        <div style="display:none;">
             <input type="text" id="inzidentzia_id" value="{{ inzidentzia.id }}">
             {{ form_rest(form) }}
             {{ form_end(form) }}
@@ -369,15 +371,20 @@
             $('#soft').select2();
             $('#printer').select2();
 
-            $('#userid').select2().on("change", function(e) {
-                $('#inzidentziacategory_userid').val(this.value);
-            });
-
             var userid = $('#inzidentziacategory_userid').val();
-
             if (userid!==null) {
                 $('#userid').val(userid).trigger("change");
             }
+
+            $('#userid').select2().on("change", function(e) {
+                //$('#inzidentziacategory_userid').val(this.value);
+                var url = Routing.generate('inzidentzia_berria', {'userid': this.value});
+                window.location.href = url;
+            });
+
+
+
+
 
             $('#inzidentziacategory_categories').select2({
                 theme: 'bootstrap',
