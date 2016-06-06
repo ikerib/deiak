@@ -31,6 +31,13 @@ class Inzidentzia
     /**
      * @var string
      *
+     * @ORM\Column(name="computerid", type="string", length=255)
+     */
+    private $computerid;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="izena", type="string", length=255, nullable=true)
      */
     private $izena;
@@ -115,6 +122,8 @@ class Inzidentzia
      * ************************************************************************************************************************************************************************
      */
 
+    
+
     /**
      * Get id
      *
@@ -147,6 +156,102 @@ class Inzidentzia
     public function getUserid()
     {
         return $this->userid;
+    }
+
+    /**
+     * Set computerid
+     *
+     * @param string $computerid
+     *
+     * @return Inzidentzia
+     */
+    public function setComputerid($computerid)
+    {
+        $this->computerid = $computerid;
+
+        return $this;
+    }
+
+    /**
+     * Get computerid
+     *
+     * @return string
+     */
+    public function getComputerid()
+    {
+        return $this->computerid;
+    }
+
+    /**
+     * Set izena
+     *
+     * @param string $izena
+     *
+     * @return Inzidentzia
+     */
+    public function setIzena($izena)
+    {
+        $this->izena = $izena;
+
+        return $this;
+    }
+
+    /**
+     * Get izena
+     *
+     * @return string
+     */
+    public function getIzena()
+    {
+        return $this->izena;
+    }
+
+    /**
+     * Set azalpena
+     *
+     * @param string $azalpena
+     *
+     * @return Inzidentzia
+     */
+    public function setAzalpena($azalpena)
+    {
+        $this->azalpena = $azalpena;
+
+        return $this;
+    }
+
+    /**
+     * Get azalpena
+     *
+     * @return string
+     */
+    public function getAzalpena()
+    {
+        return $this->azalpena;
+    }
+
+    /**
+     * Set teknikoa
+     *
+     * @param string $teknikoa
+     *
+     * @return Inzidentzia
+     */
+    public function setTeknikoa($teknikoa)
+    {
+        $this->teknikoa = $teknikoa;
+
+        return $this;
+    }
+
+    /**
+     * Get teknikoa
+     *
+     * @return string
+     */
+    public function getTeknikoa()
+    {
+        return $this->teknikoa;
     }
 
     /**
@@ -253,78 +358,6 @@ class Inzidentzia
     public function getDeiak()
     {
         return $this->deiak;
-    }
-
-    /**
-     * Set teknikoa
-     *
-     * @param string $teknikoa
-     *
-     * @return Inzidentzia
-     */
-    public function setTeknikoa($teknikoa)
-    {
-        $this->teknikoa = $teknikoa;
-
-        return $this;
-    }
-
-    /**
-     * Get teknikoa
-     *
-     * @return string
-     */
-    public function getTeknikoa()
-    {
-        return $this->teknikoa;
-    }
-
-    /**
-     * Set izena
-     *
-     * @param string $izena
-     *
-     * @return Inzidentzia
-     */
-    public function setIzena($izena)
-    {
-        $this->izena = $izena;
-
-        return $this;
-    }
-
-    /**
-     * Get izena
-     *
-     * @return string
-     */
-    public function getIzena()
-    {
-        return $this->izena;
-    }
-
-    /**
-     * Set azalpena
-     *
-     * @param string $azalpena
-     *
-     * @return Inzidentzia
-     */
-    public function setAzalpena($azalpena)
-    {
-        $this->azalpena = $azalpena;
-
-        return $this;
-    }
-
-    /**
-     * Get azalpena
-     *
-     * @return string
-     */
-    public function getAzalpena()
-    {
-        return $this->azalpena;
     }
 
     /**

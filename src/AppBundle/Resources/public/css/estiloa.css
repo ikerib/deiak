@@ -30,3 +30,7 @@
     background: #1e282c !important;
     border-left-color: #3c8dbc;
 }
+
+.main-header .logo {
+    width: 275px !important;
+}

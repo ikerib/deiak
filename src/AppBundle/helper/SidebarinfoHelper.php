@@ -22,16 +22,16 @@ class SidebarinfoHelper
         $this->container = $container;
     }
 
-    public function getSidebarinfo($userid)
+    public function getSidebarinfo($computerid)
     {
         $emocs = $this->container->get('doctrine')->getEntityManager('ocs');
         $connection = $emocs->getConnection();
 
-        $statement = $connection->prepare("SELECT * FROM hardware WHERE USERID = :id");
-        $statement->bindValue('id', $userid);
+        $statement = $connection->prepare("SELECT * FROM hardware WHERE NAME = :computerid");
+        $statement->bindValue('computerid', $computerid);
         $statement->execute();
         $info = $statement->fetchAll();
-
+        
         $statement = $connection->prepare("SELECT * FROM storages WHERE hardware_id = :id");
         $statement->bindValue('id', $info[0]['ID']);
         $statement->execute();

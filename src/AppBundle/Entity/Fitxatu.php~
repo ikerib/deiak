@@ -125,4 +125,3 @@ class Fitxatu
         return $this->amaitu;
     }
 }
-

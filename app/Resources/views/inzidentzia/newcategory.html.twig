@@ -55,9 +55,10 @@
                 <li>
                     {% for n in net if n.IPADDRESS|slice(0,10) == '172.28.64.' %}
                         <button id="btnWol" class="btn btn-xs btn-primary" data-ip="{{ n.IPADDRESS }}" data-mac="{{ n.MACADDR }}" >WOL</button>
-                        <button id="btnGuacamole" class="btn btn-xs btn-warning" onclick="window.open('http://172.28.64.231:8080/guacamole/#/?username=guacadmin&password=guacadmin');">Guacamole</button>
+                        <button id="btnGuacamole" data-id="3800" data-type="c" data-datasource="mysql" class="btn btn-xs btn-warning">Guacamole</button>
                     {% endfor %}
                 </li>
+
 
             {% endif %}
             <li>&nbsp;</li>
@@ -142,7 +143,7 @@
                                     <label class="control-label required" for="userid">Erabiltzailea</label>
                                     <select name="inzidentziacategory[userid]" id="userid" class="form-control">
                                         {% for u in users %}
-                                            <option value="{{ u.userid }}">{{ u.userid }}</option>
+                                            <option value="{{ u.userid }}">{{ u.first_name ~ ", " ~ u.last_name }}</option>
                                         {% endfor %}
                                     </select>
                                 </div>
@@ -270,9 +271,9 @@
 
     <script type="text/javascript">
 
-        $(function() {
+        $(function () {
 
-            if ( $('#inzidentziacategory_konpondua').prop('checked') === true ) {
+            if ($('#inzidentziacategory_konpondua').prop('checked') === true) {
                 $('#btn_fix').removeClass("btn-danger");
                 $('#btn_fix').addClass("btn-success");
             } else {
@@ -296,25 +297,24 @@
                     type: "POST",
                     url: url,
                     data: data,
-                    success: function(data, dataType)
-                    {
-                        if (( data.parent_id !== "" ) && ( data.parent_id !== undefined )){
+                    success: function (data, dataType) {
+                        if (( data.parent_id !== "" ) && ( data.parent_id !== undefined )) {
                             // begiratu parent-a badagoen dagoeneko
-                            if ( $("#aita option[value='"+ data.parent_id +"']").length === 0 ) {
-                                $('#aita').append($("<option></option>").attr("value",data.parent_id).text(data.parent_name));
-                                $('#category_parent').append($("<option></option>").attr("value",data.parent_id).text(data.parent_name));
+                            if ($("#aita option[value='" + data.parent_id + "']").length === 0) {
+                                $('#aita').append($("<option></option>").attr("value", data.parent_id).text(data.parent_name));
+                                $('#category_parent').append($("<option></option>").attr("value", data.parent_id).text(data.parent_name));
                             }
                             $('#aita').val(data.parent_id);
-                            $('#semea').append($("<option></option>").attr("value",data.id).text(data.name));
+                            $('#semea').append($("<option></option>").attr("value", data.id).text(data.name));
                             $('#semea').val(data.id);
                         } else {
-                            $('#aita').append($("<option></option>").attr("value",data.id).text(data.name));
+                            $('#aita').append($("<option></option>").attr("value", data.id).text(data.name));
                             $('#aita').val(data.id);
                         }
 
 
                         var values = $('#inzidentziacategory_categories').val();
-                        $('#inzidentziacategory_categories').append($("<option></option>").attr("value",data.id).text(data.name));
+                        $('#inzidentziacategory_categories').append($("<option></option>").attr("value", data.id).text(data.name));
                         $('#inzidentziacategory_categories').val(data.id).trigger("change");
 
                         // Formulario hustu
@@ -323,8 +323,7 @@
                         $('#myModal').modal('toggle');
                     },
 
-                    error: function(XMLHttpRequest, textStatus, errorThrown)
-                    {
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
                         console.log('Error : ' + errorThrown);
                     }
                 });
@@ -332,9 +331,9 @@
 
             $('#btn_fix').on("click", function (e) {
                 var miid = $('#inzidentzia_id').val();
-                if ( miid === "" ) {
+                if (miid === "") {
                     // Oraindik ez da grabatu bera checkboz-a aldatuko dugu
-                    if ( $('#inzidentziacategory_konpondua').prop('checked') === true ) {
+                    if ($('#inzidentziacategory_konpondua').prop('checked') === true) {
                         $('#inzidentziacategory_konpondua').prop('checked', false);
                         $('#btn_fix').removeClass("btn-success");
                         $('#btn_fix').addClass("btn-danger");
@@ -344,12 +343,11 @@
                         $('#btn_fix').addClass("btn-success");
                     }
                 } else {
-                    var url = Routing.generate('inzidentzia_fix', {'id': miid} );
+                    var url = Routing.generate('inzidentzia_fix', {'id': miid});
                     $.ajax({
                         type: "GET",
                         url: url,
-                        success: function(data, dataType)
-                        {
+                        success: function (data, dataType) {
                             if (data.konponduta === 0) {
                                 $('#btn_fix').removeClass("btn-success");
                                 $('#btn_fix').addClass("btn-danger");
@@ -360,8 +358,7 @@
 
                         },
 
-                        error: function(XMLHttpRequest, textStatus, errorThrown)
-                        {
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
                             console.log('Error : ' + errorThrown);
                         }
                     });
@@ -372,18 +369,15 @@
             $('#printer').select2();
 
             var userid = $('#inzidentziacategory_userid').val();
-            if (userid!==null) {
+            if (userid !== null) {
                 $('#userid').val(userid).trigger("change");
             }
 
-            $('#userid').select2().on("change", function(e) {
-                //$('#inzidentziacategory_userid').val(this.value);
-                var url = Routing.generate('inzidentzia_berria', {'userid': this.value});
-                window.location.href = url;
+            $('#userid').select2().on("change", function (e) {
+//                //$('#inzidentziacategory_userid').val(this.value);
+//                var url = Routing.generate('inzidentzia_berria', {'userid': this.value});
+//                window.location.href = url;
             });
-
-
-
 
 
             $('#inzidentziacategory_categories').select2({
@@ -391,14 +385,14 @@
                 tags: true
             });
 
-            $('#aita').on("click", function() {
+            $('#aita').on("click", function () {
                 var url;
                 var mival = $(this).val();
                 url = Routing.generate('get_category', {'id': mival});
 
-                $.getJSON(url, function(data) {
+                $.getJSON(url, function (data) {
                     $("#semea").find('option').remove();
-                    $.each(data, function() {
+                    $.each(data, function () {
                         $("#semea").append('<option value="' + this.id + '">' + this.name + '</option>');
                     })
                 })
@@ -416,7 +410,7 @@
                 $('#inzidentziacategory_categories').val(sval).trigger("change");
             });
 
-            $('#btnWol').on("click", function() {
+            $('#btnWol').on("click", function () {
                 var ip = $(this).data("ip");
                 var mac = $(this).data("mac");
                 var url = Routing.generate('inzidentzia_wol', {'ip': ip, 'mac': mac});
@@ -424,13 +418,52 @@
                 $.ajax({
                     url: url,
                     context: document.body
-                }).done(function() {
-                    $('#btnWol').html("WOL - bidalita" );
-                }).fail(function() {
-                    $('#btnWol').html("WOL - error" );
+                }).done(function () {
+                    $('#btnWol').html("WOL - bidalita");
+                }).fail(function () {
+                    $('#btnWol').html("WOL - error");
                 });
 
             })
+
+//            MzgwMABjAG15c3Fs
+            var ClientIdentifier = function toString(id) {
+                return window.btoa([
+                    id.id,
+                    id.type,
+                    id.dataSource
+                ].join('\0'));
+            };
+
+            var id = {};
+            id.id = 3800;
+            id.type = 'c';
+            id.dataSource = 'mysql';
+            console.log("hau: " + ClientIdentifier(id));
+            var miurl = ClientIdentifier(id);
+            $('#nireurl').href += miurl;
+            $('#nireurl').attr('href', function (i, str) {
+                return str + miurl;
+            });
+
+            $('#btnGuacamole').on("click", function (){
+                var urlbase = 'http://172.28.64.231:8080/guacamole/#/client/';
+                var miid = $(this).data('id');
+                var mitype = $(this).data('type');
+                var midataSource = $(this).data('datasource');
+
+                var guacid = {};
+                guacid.id= miid;
+                guacid.type = mitype;
+                guacid.dataSource = midataSource;
+
+                var guac = ClientIdentifier(guacid);
+
+                var url = urlbase + guac;
+                console.log(url);
+                window.open(url);
+            });
+
 
         });
 

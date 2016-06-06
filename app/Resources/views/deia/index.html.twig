@@ -1,12 +1,25 @@
 {% extends 'base.html.twig' %}
 
-{% block body %}
+{% block body_class %} skin-blue {% endblock %}
+
+{% block head_javascript %}
+    {{ parent() }}
+
+    <link rel="stylesheet" href="{{ asset('bundles/easyadmin/stylesheet/easyadmin-all.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/app/css/datatables/dataTables.bootstrap.css') }}">
+
+{% endblock %}
+
+{% block sidebar %}
+{% endblock %}
+
+{% block main %}
     <h1>Deia list</h1>
 
     <table>
         <thead>
             <tr>
-                <th>Id</th>
+                <th>Ida</th>
                 <th>Userid</th>
                 <th>Teknikoa</th>
                 <th>Azalpena</th>

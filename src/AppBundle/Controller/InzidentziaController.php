@@ -50,6 +50,9 @@ class InzidentziaController extends Controller
 
         $helper_ldap = $this->get('app.helper.ldap');
         $users = $helper_ldap->getLdapUsers();
+        dump($users);
+        $helper_ldap = $this->get('app.helper.ldap');
+        $computers = $helper_ldap->getLdapComputers();
 
         $helper_sidebar = $this->get('app.helper.sidebarinfo');
         $ocs = $helper_sidebar->getSidebarinfo($userid);
@@ -63,6 +66,7 @@ class InzidentziaController extends Controller
             'inzidentzia'  => $inzidentzium,
             'kategorik'     => $kategorik,
             'users'         => $users,
+            'computers'    => $computers,
             'form'          => $form->createView(),
             'frmInzidentzia' => $frmInzidentzia->createView(),
         ));

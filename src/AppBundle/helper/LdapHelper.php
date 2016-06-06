@@ -62,4 +62,42 @@ class LdapHelper
         }
         return $ad_users;
     }
+
+    public function getLdapComputers() {
+        $ldap_username = $this->container->getParameter('ldap_username');
+        $ldap_password = $this->container->getParameter('ldap_password');
+        $domain = "@".$this->container->getParameter('ldap_domain');
+        $ldap_connection = ldap_connect($this->container->getParameter('ldap_host'));
+        $message="";
+        if (FALSE === $ldap_connection){
+            // Uh-oh, something is wrong...
+        }
+
+        ldap_set_option($ldap_connection, LDAP_OPT_PROTOCOL_VERSION, 3) or die('Unable to set LDAP protocol version');
+        ldap_set_option($ldap_connection, LDAP_OPT_REFERRALS, 0); // We need this for doing an LDAP search.
+
+        if (TRUE === ldap_bind($ldap_connection, $ldap_username.$domain, $ldap_password)){
+            $ldap_base_dn = 'DC='.$this->container->getParameter('ldap_dc').',DC='.$this->container->getParameter('ldap_dc2');
+            $search_filter = '(&(objectCategory=computer)(samaccountname=*))';
+            $attributes = array();
+            $attributes[] = 'givenname';
+            $attributes[] = 'mail';
+            $attributes[] = 'samaccountname';
+            $attributes[] = 'sn';
+            $result = ldap_search($ldap_connection, $ldap_base_dn, $search_filter, $attributes);
+            
+            if (FALSE !== $result){
+                $entries = ldap_get_entries($ldap_connection, $result);
+                for ($x=0; $x<$entries['count']; $x++){
+                    if (!empty($entries[$x]['samaccountname'][0])
+                        ){
+                        $ad_users[$x] = rtrim(strtoupper(trim($entries[$x]['samaccountname'][0])),"$");
+                    }
+                }
+            }
+            ldap_unbind($ldap_connection); // Clean up after ourselves.
+        }
+        return $ad_users;
+    }
+
 }

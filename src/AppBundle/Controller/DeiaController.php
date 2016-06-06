@@ -90,7 +90,7 @@ class DeiaController extends Controller
             return $this->redirectToRoute('inzidentzia_berria', array('userid' => $results[0]["USERID"]));
         } else {
             $helper = $this->get('app.helper.ldap');
-            $users = $helper->getLdapUsers();
+            $users = $helper->getLdapComputers();
             return $this->render('deia/bilatu.html.twig', array(
                 'ext' => $ext,
                 'users' => $users

@@ -43,7 +43,7 @@
                                         <select class="form-control select2" name="userid" data-width="100%">
                                             <option value="" disabled selected>Aukeratu bat</option>
                                             {% for key,val in users %}
-                                                <option value="{{ val.userid }}">{{ val.last_name ~ ", " ~ val.first_name }}</option>
+                                                <option value="{{ val }}">{{ val }}</option>
                                             {% endfor %}
                                         </select>
                                     </div>
