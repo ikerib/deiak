@@ -96,12 +96,6 @@ class Inzidentzia
      */
     private $categories;
 
-    public function addCategory(Category $category)
-    {
-        $category->addCategory($this); // synchronously updating inverse side
-        $this->$categories[] = $category;
-    }
-
     public function __construct() {
         $this->children = new \Doctrine\Common\Collections\ArrayCollection();
         $this->categories=new \Doctrine\Common\Collections\ArrayCollection();
@@ -109,11 +103,18 @@ class Inzidentzia
         $this->updatedAt = new \DateTime();
     }
 
+
+    // public function addCategory(Category $category)
+    // {
+    //     $category->addCategory($this); // synchronously updating inverse side
+    //     $this->$categories[] = $category;
+    // }
+
     public function __toString()
     {
         return $this->getIzena();
     }
-    
+
     /**
      * ************************************************************************************************************************************************************************
      * ************************************************************************************************************************************************************************
@@ -122,7 +123,7 @@ class Inzidentzia
      * ************************************************************************************************************************************************************************
      */
 
-    
+
 
     /**
      * Get id

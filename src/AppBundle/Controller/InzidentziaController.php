@@ -50,19 +50,19 @@ class InzidentziaController extends Controller
 
         $helper_ldap = $this->get('app.helper.ldap');
         $users = $helper_ldap->getLdapUsers();
-        dump($users);
+
         $helper_ldap = $this->get('app.helper.ldap');
         $computers = $helper_ldap->getLdapComputers();
 
         $helper_sidebar = $this->get('app.helper.sidebarinfo');
         $ocs = $helper_sidebar->getSidebarinfo($userid);
-
+        
         return $this->render('inzidentzia/newcategory.html.twig', array(
             'ocs'           => $ocs[0][0],
             'storage'       => $ocs[1],
             'printers'      => $ocs[2],
             'soft'          => $ocs[3],
-            'net'           => $ocs[4],
+            'net'           => $ocs[4][0],
             'inzidentzia'  => $inzidentzium,
             'kategorik'     => $kategorik,
             'users'         => $users,

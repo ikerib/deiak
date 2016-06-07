@@ -55,7 +55,7 @@
 
 {% block body %}
     <body class="hold-transition login-page">
-    {% if error %}<div>{{ dump(error) }}</div>{% endif %}
+    {% if error %}<div>{{ error }}</div>{% endif %}
     <div class="login-box">
     <div class="login-logo">
         <a href="{{ path('login') }}"><b>Deiak</b></a>

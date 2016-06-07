@@ -31,7 +31,6 @@
 	    "egeloen/ckeditor-bundle": "^4.0",
 	    "friendsofsymfony/jsrouting-bundle": "^1.6",
 	    "bmatzner/jquery-ui-bundle": "*",
-        "sunra/angularjs-symfony2-bundle": "dev-master",
         "jms/serializer-bundle": "^1.1",
         "friendsofsymfony/rest-bundle": "^1.7",
         "tomnomnom/phpwol": "0.1.0"

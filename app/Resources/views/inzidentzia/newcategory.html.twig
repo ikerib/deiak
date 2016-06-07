@@ -53,10 +53,10 @@
                     {% endfor %}
                 </li>
                 <li>
-                    {% for n in net if n.IPADDRESS|slice(0,10) == '172.28.64.' %}
+                    {% for n in net if (n.IPADDRESS is defined and n.IPADDRESS|slice(0,10) == '172.28.64.' ) %}
                         <button id="btnWol" class="btn btn-xs btn-primary" data-ip="{{ n.IPADDRESS }}" data-mac="{{ n.MACADDR }}" >WOL</button>
-                        <button id="btnGuacamole" data-id="3800" data-type="c" data-datasource="mysql" class="btn btn-xs btn-warning">Guacamole</button>
                     {% endfor %}
+                    <button id="btnGuacamole" data-id="{{ net.connection_id }}" data-type="c" data-datasource="mysql" class="btn btn-xs btn-warning">Guacamole</button>
                 </li>
 
 
