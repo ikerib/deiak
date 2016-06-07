@@ -54,19 +54,20 @@ class SidebarinfoHelper
 
         $emocs = $this->container->get('doctrine')->getEntityManager('guacamole');
         $con = $emocs->getConnection();
-        dump($computerid);
+
         $statement = $con->prepare("select connection_id from guacamole_connection where connection_name=:computerid");
         $statement->bindValue('computerid', $computerid);
         $statement->execute();
         $guacamoleid = $statement->fetchAll();
-        dump($guacamoleid);
+
 
         $resp = [];
         $resp[0] = $info;
         $resp[1] = $storage;
         $resp[2] = $printers;
         $resp[3] = $soft;
-        $resp[4] = $guacamoleid;
+        $resp[4] = $net;
+        $resp[5] = $guacamoleid;
         
         return $resp;
     }
