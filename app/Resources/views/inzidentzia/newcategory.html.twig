@@ -42,7 +42,7 @@
                     {% for s in storage %}
                         {% if s.TYPE is defined %}
                             {% if s.TYPE == "Fixedxhard disk media" %}
-                                <span class="label bg-green">HDD: {{ (s.DISKSIZE / 1024) |round }} Gb</span>
+                                <span class="label bg-greien">HDD: {{ (s.DISKSIZE / 1024) |round }} Gb</span>
                                 {% if 'KINGSTON' in s.NAME %}
                                     <span class="label bg-red">SSD</span>
                                 {% endif %}
