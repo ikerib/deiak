@@ -63,7 +63,7 @@ class DeiaController extends Controller
         $resp = $statement->execute();
 
         return $this->redirectToRoute('inzidentzia_berria', array(
-            'userid' => $userid,
+            'computerid' => $userid,
         ));
     }
 
