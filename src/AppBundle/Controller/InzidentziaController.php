@@ -22,15 +22,15 @@
         /**
          * Creates a new Inzidentzia entity.
          *
-         * @Route("/berria/{userid}", name="inzidentzia_berria")
+         * @Route("/berria/{computerid}", name="inzidentzia_berria")
          * @Method({"GET", "POST"})
          */
-        public function berriaAction(Request $request, $userid)
+        public function berriaAction(Request $request, $computerid)
         {
             $inzidentzium = new Inzidentzia();
             $user = $this->getUser();
             $inzidentzium->setTeknikoa($user);
-            $inzidentzium->setUserid($userid);
+            $inzidentzium->setComputerid($computerid);
             $form = $this->createForm('AppBundle\Form\InzidentziacategoryType', $inzidentzium);
             $form->handleRequest($request);
 
@@ -55,7 +55,7 @@
             $computers = $helper_ldap->getLdapComputers();
 
             $helper_sidebar = $this->get('app.helper.sidebarinfo');
-            $ocs = $helper_sidebar->getSidebarinfo($userid);
+            $ocs = $helper_sidebar->getSidebarinfo($computerid);
 
             return $this->render(
                 'inzidentzia/newcategory.html.twig',
@@ -115,6 +115,7 @@
                     'printers'       => $ocs[2],
                     'soft'           => $ocs[3],
                     'net'            => $ocs[4],
+                    'guacamole'      => $ocs[5][0],
                     'inzidentzia'    => $inzidentzium,
                     'kategorik'      => $kategorik,
                     'users'          => $users,
