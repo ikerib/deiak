@@ -162,7 +162,7 @@
                         <div class="row">
                             <div class="col-xs-6">
                                 <div class="form-group">
-                                    <select multiple name="kat_parent" id="aita" title="Kategoria" class="form-control">
+                                    <select multiple name="kat_parent" id="aita" title="Kategoria" class="form-control" size="8">
                                         {% for k in kategorik %}
                                             <option value="{{ k.id }}">{{ k }}</option>
                                         {% endfor %}
@@ -171,7 +171,7 @@
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <select multiple name="kat_child" id="semea" title="Azpikategoria" class="form-control"></select>
+                                    <select multiple name="kat_child" id="semea" title="Azpikategoria" class="form-control" size="8">></select>
                                 </div>
                             </div>
                         </div>
