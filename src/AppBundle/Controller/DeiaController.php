@@ -74,11 +74,9 @@ class DeiaController extends Controller
     {
         // Extensiotik erabiltzaile izena atera eta berbideratu
 
-
-
         $emocs = $this->getDoctrine()->getManager('ocs');
         $connection = $emocs->getConnection();
-        $statement = $connection->prepare("SELECT USERID
+        $statement = $connection->prepare("SELECT NAME
                                             FROM hardware INNER JOIN accountinfo
                                                 ON hardware.ID = accountinfo.HARDWARE_ID
                                             WHERE accountinfo.luzapena = :ext;");
@@ -87,7 +85,7 @@ class DeiaController extends Controller
         $results = $statement->fetchAll();
 
         if ( count($results) > 0 ) {
-            return $this->redirectToRoute('inzidentzia_berria', array('userid' => $results[0]["USERID"]));
+            return $this->redirectToRoute('inzidentzia_berria', array('computerid' => $results[0]["NAME"]));
         } else {
             $helper = $this->get('app.helper.ldap');
             $users = $helper->getLdapComputers();
