@@ -18,7 +18,14 @@ class InzidentziacategoryType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('categories')
+            //->add('categories')
+            ->add('categories', EntityType::class, array(
+                'class' => 'AppBundle:Category',
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('b')
+                        ->orderBy('b.name', 'ASC');
+                }
+            ))
             ->add('userid')
             ->add('computerid')
             ->add('teknikoa')
@@ -26,7 +33,7 @@ class InzidentziacategoryType extends AbstractType
             ->add('konpondua')
         ;
     }
-    
+
     /**
      * @param OptionsResolver $resolver
      */

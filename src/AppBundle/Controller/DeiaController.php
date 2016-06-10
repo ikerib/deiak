@@ -57,7 +57,7 @@ class DeiaController extends Controller
                                             INNER JOIN hardware
                                             ON accountinfo.HARDWARE_ID = hardware.ID
                                             SET accountinfo.luzapena = :ext
-                                            WHERE hardware.USERID = :userid");
+                                            WHERE hardware.NAME = :userid");
         $statement->bindValue('ext', $ext);
         $statement->bindValue('userid', $userid);
         $resp = $statement->execute();
