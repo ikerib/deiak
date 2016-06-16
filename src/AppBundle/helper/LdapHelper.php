@@ -85,7 +85,7 @@ class LdapHelper
             $attributes[] = 'samaccountname';
             $attributes[] = 'sn';
             $result = ldap_search($ldap_connection, $ldap_base_dn, $search_filter, $attributes);
-            
+
             if (FALSE !== $result){
                 $entries = ldap_get_entries($ldap_connection, $result);
                 for ($x=0; $x<$entries['count']; $x++){

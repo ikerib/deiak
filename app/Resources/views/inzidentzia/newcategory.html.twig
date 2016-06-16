@@ -411,7 +411,7 @@
             $('#semea').on("click", function () {
                 var sval = [];
                 sval = $('#inzidentziacategory_categories').val();
-                if (sval !== null) {
+                if ( (sval !== null) && ( sval !== "")) {
                     sval.push($(this).val());
                 } else {
                     sval = $(this).val();

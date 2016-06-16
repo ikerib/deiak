@@ -24,7 +24,9 @@ class InzidentziacategoryType extends AbstractType
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('b')
                         ->orderBy('b.name', 'ASC');
-                }
+                },
+                'multiple'=>'multiple',
+                'placeholder' => 'Aukeratu Kategoria'
             ))
             ->add('userid')
             ->add('computerid')
