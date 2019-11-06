@@ -19,7 +19,7 @@ class AppKernel extends Kernel
             new JavierEguiluz\Bundle\EasyAdminBundle\EasyAdminBundle(),
             new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
             new Bmatzner\JQueryUIBundle\BmatznerJQueryUIBundle(),
-            new FOS\RestBundle\FOSRestBundle(),
+
             new JMS\SerializerBundle\JMSSerializerBundle(),
             new Ivory\CKEditorBundle\IvoryCKEditorBundle(),
         ];

@@ -1,0 +1,12 @@
+parameters:
+    ocs_host: IP
+    ocs_port: null
+    ocs_name: ocsweb
+    ocs_user: USERNAME
+    ocs_password: PASSWORD
+
+    guacamole_host: 127.0.0.1
+    guacamole_port: null
+    guacamole_name: guacamole_db
+    guacamole_user: USER
+    guacamole_password: PASSWD
